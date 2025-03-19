@@ -7,6 +7,8 @@
 # Build directories
 **/dist/
 
+**/.idea/
+
 # Logs
 *.log
 npm-debug.log*
