@@ -24,5 +24,18 @@ Content-Type: application/json
   "width": 4.00
 }
 
+###  Get all users
+GET http://localhost:5001/api/users
+###  Create a new user
 
+POST http://localhost:5001/api/users
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "avatar": "https://example.com/avatar.png",
+  "email": "john@example.com",
+  "password": "securepassword",
+  "role": "customer"
+}
 
