@@ -1,0 +1,41 @@
+GET http://localhost:5001/api/stickers
+
+###
+
+DELETE http://localhost:5001/api/stickers/3
+Content-Type: application/json
+
+
+###
+POST http://localhost:5001/api/stickers
+Content-Type: application/json
+
+{
+  "title": "Minimalist Mountain Sticker",
+  "description": "A beautiful minimalist mountain design.",
+  "image_url": "https://example.com/minimalist-mountain.png",
+  "image_alt": "Minimalist Mountain Sticker",
+  "category": "Nature",
+  "sticker_type": "single",
+  "stock_quantity": 50,
+  "price": 3.99,
+  "discount": 0.50,
+  "height": 4.00,
+  "width": 4.00
+}
+
+###  Get all users
+GET http://localhost:5001/api/users
+###  Create a new user
+
+POST http://localhost:5001/api/users
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "avatar": "https://example.com/avatar.png",
+  "email": "john@example.com",
+  "password": "securepassword",
+  "role": "customer"
+}
+
