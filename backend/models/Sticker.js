@@ -13,12 +13,6 @@ const Sticker = sequelize.define("Sticker", {
     description: {
         type: DataTypes.TEXT,
     },
-    image_url: {
-        type: DataTypes.STRING(255),
-    },
-    image_alt: {
-        type: DataTypes.STRING(255),
-    },
     category: {
         type: DataTypes.STRING(50),
     },
