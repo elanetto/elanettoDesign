@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import stickerRoutes from "./routes/stickerRoutes.js";
+import categoryRoutes from "./routes/CategoryRoutes.js";
 import sequelize from "./config/db.js";
 
 // Sync the database (this updates the structure automatically)
@@ -19,6 +20,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/stickers", stickerRoutes);
+app.use("/api/categories", categoryRoutes);
 
 app.get("/", (req, res) => {
     res.send("Welcome to Elanetto's Sticker API");
