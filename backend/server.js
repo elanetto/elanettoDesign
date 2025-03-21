@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/CategoryRoutes.js";
 import sequelize from "./config/db.js";
 import stickerAlternativeRoutes from "./routes/stickerAlternativeRoutes.js";
+import bookmarkRoutes from "./routes/bookmarkRoutes.js";
 
 // Sync the database (this updates the structure automatically)
 sequelize.sync({ alter: true })
@@ -23,6 +24,7 @@ app.use(express.json());
 // Routes
 app.use("/api/stickers", stickerRoutes);
 app.use("/api/sticker-alternatives", stickerAlternativeRoutes);
+app.use("/api/bookmarks", bookmarkRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.get("/", (req, res) => {
