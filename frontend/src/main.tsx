@@ -4,18 +4,19 @@ import {StrictMode} from "react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import AddProductPage from "./routes/AddProductPage";
+import AddProductPage from "./routes/AdminPage/AddProductPage";
 import AdminPage from "./routes/AdminPage";
 import CartPage from "./routes/CartPage";
 import CheckoutPage from "./routes/CheckoutPage";
 import CheckoutSuccessPage from "./routes/CheckoutSuccessPage";
-import EditProductPage from "./routes/UpdateProductPage";
+import EditProductPage from "./routes/AdminPage/UpdateProductPage";
 import LoginPage from "./routes/LoginPage";
 import RegisterPage from "./routes/RegisterPage";
 import ProductsPage from "./routes/ProductsPage";
 import ProfilePage from "./routes/ProfilePage";
 import SpecificProductPage from "./routes/SpecificProductPage";
 import Layout from "./Layout";
+import AdminLayout from "./routes/AdminPage/AdminLayout";
 
 const router = createBrowserRouter([
     {
@@ -66,8 +67,12 @@ const router = createBrowserRouter([
     },
     {
         path: "admin",
-        element: <AdminPage />,
+        element: <AdminLayout />,
         children: [
+            {
+                path: "",
+                element: <AdminPage />,
+            },
             {
                 path: "add-new-product",
                 element: <AddProductPage />,
