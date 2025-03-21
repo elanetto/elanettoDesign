@@ -25,7 +25,7 @@ export default function ProductCard({ product, mode, onEdit, onDelete, onAddToCa
             <div className="text-center mt-4">
                 <h2 className="text-lg font-semibold">{product.title}</h2>
                 <p className="text-gray-600 text-sm">{product.category || "No category"}</p>
-                <p className="text-red-500 text-xl font-bold mt-1">NOK {product.price}</p>
+                <p className="text-red-500 text-xl font-semibold mt-1">NOK {product.price}</p>
                 <p className="text-gray-500 text-sm mt-1">
                     {product.stock_quantity} in stock | {product.sticker_type}
                 </p>
