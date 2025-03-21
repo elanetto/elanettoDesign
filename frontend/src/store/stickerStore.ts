@@ -26,9 +26,8 @@ export const useStickerStore = create<StickerState>((set) => ({
             if (!response.ok) throw new Error(`Failed to fetch stickers: ${response.status}`);
 
             const result = await response.json();
-            console.log("Fetched Stickers:", result); // 🔍 Debugging log
+            console.log("Fetched Stickers:", result);
 
-            // ✅ Ensure correct data format
             set({ stickers: Array.isArray(result) ? result : result.data || [], loading: false });
         } catch (err) {
             console.error("Error fetching stickers:", err);
