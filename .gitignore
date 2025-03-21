@@ -8,6 +8,8 @@
 **/dist/
 **/.idea/
 
+**/.idea/
+
 # Logs
 *.log
 npm-debug.log*
