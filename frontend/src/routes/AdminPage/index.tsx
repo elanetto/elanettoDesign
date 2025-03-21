@@ -1,15 +1,12 @@
 import { useEffect } from "react";
 import { Loading } from "../../utilities/loading";
 import { ErrorMessage } from "../../utilities/errorMessage";
-import { useStickerStore } from "../../store/stickerStore";
-import AdminProductCard from "../../components/AdminProductCard";
+import {useFetchStickers} from "../../utilities/useFetchStickers";
+import ProductCard from "../../components/ProductCard";
 
 export default function AdminPage() {
-    const { stickers, loading, error, fetchStickers, deleteSticker } = useStickerStore(); // ✅ Using Zustand deleteSticker
+    const { stickers, loading, error, deleteSticker } = useFetchStickers();
 
-    useEffect(() => {
-        fetchStickers();
-    },[fetchStickers]);
     if (loading) return <Loading />;
     if (error) return <ErrorMessage message={error} />;
 
@@ -19,17 +16,16 @@ export default function AdminPage() {
     };
 
     return (
-        <div className="w-full flex justify-center">
-            <div className="grid gap-6 p-6 mx-auto">
-                {stickers.map((sticker) => (
-                    <AdminProductCard
-                        key={sticker.id}
-                        product={sticker}
-                        onEdit={() => console.log("Edit", sticker.id)}
-                        onDelete={() => handleDelete(sticker.id)} // ✅ No need for extra filtering
-                    />
-                ))}
-            </div>
+        <div className="grid gap-6 p-6 mx-auto">
+            {stickers.map((sticker) => (
+                <ProductCard
+                    key={sticker.id}
+                    product={sticker}
+                    mode="admin"
+                    onEdit={() => console.log("Edit", sticker.id)}
+                    onDelete={() => handleDelete(sticker.id)}
+                />
+            ))}
         </div>
     );
 }
