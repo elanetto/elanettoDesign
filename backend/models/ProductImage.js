@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
 import Sticker from "./Sticker.js";
 import StickerAlternative from "./StickerAlternative.js";
+import Bookmark from "./Bookmark.js";
 
 const ProductImage = sequelize.define(
     "ProductImage",
@@ -44,5 +45,16 @@ ProductImage.belongsTo(Sticker, { foreignKey: "product_id" });
 
 StickerAlternative.hasMany(ProductImage, { foreignKey: "product_id", as: "images", scope: { product_type: "sticker_alternative" } });
 ProductImage.belongsTo(StickerAlternative, { foreignKey: "product_id" });
+
+// Add bookmark association
+Bookmark.hasMany(ProductImage, {
+    foreignKey: "product_id",
+    as: "images",
+    scope: { product_type: "bookmark" },
+});
+ProductImage.belongsTo(Bookmark, {
+    foreignKey: "product_id",
+});
+
 
 export default ProductImage;
