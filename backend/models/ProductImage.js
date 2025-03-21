@@ -1,6 +1,9 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
 import Sticker from "./Sticker.js";
+import StickerAlternative from "./StickerAlternative.js";
+import Bookmark from "./Bookmark.js";
+import Bundle from "./Bundle.js";
 
 const ProductImage = sequelize.define(
     "ProductImage",
@@ -13,11 +16,10 @@ const ProductImage = sequelize.define(
         product_id: {
             type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
-            references: {
-                model: Sticker,
-                key: "id",
-            },
-            onDelete: "CASCADE",
+        },
+        product_type: {
+            type: DataTypes.ENUM("sticker", "sticker_alternative", "bookmark", "bundle"),
+            allowNull: false,
         },
         image_url: {
             type: DataTypes.STRING(255),
@@ -29,7 +31,7 @@ const ProductImage = sequelize.define(
         },
         is_primary: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false, // One image should be primary
+            defaultValue: false,
         },
     },
     {
@@ -38,8 +40,10 @@ const ProductImage = sequelize.define(
     }
 );
 
-// Define association
-Sticker.hasMany(ProductImage, { foreignKey: "product_id", as: "images" });
-ProductImage.belongsTo(Sticker, { foreignKey: "product_id" });
+// Associations
+Sticker.hasMany(ProductImage, { foreignKey: "product_id", as: "images", scope: { product_type: "sticker" } });
+StickerAlternative.hasMany(ProductImage, { foreignKey: "product_id", as: "images", scope: { product_type: "sticker_alternative" } });
+Bookmark.hasMany(ProductImage, { foreignKey: "product_id", as: "images", scope: { product_type: "bookmark" } });
+Bundle.hasMany(ProductImage, { foreignKey: "product_id", as: "images", scope: { product_type: "bundle" } });
 
 export default ProductImage;
