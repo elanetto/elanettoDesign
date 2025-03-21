@@ -1,29 +1,34 @@
-import {Loading} from "../../utilities/loading";
-import {ErrorMessage} from "../../utilities/errorMessage";
-import {useFetchStickers} from "../../hooks/useFetchStickers";
+import { Loading } from "../../utilities/loading";
+import { ErrorMessage } from "../../utilities/errorMessage";
+import { useFetchStickers } from "../../hooks/useFetchStickers";
 import ProductCard from "../../components/ProductCard";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPage() {
-    const {stickers, loading, error, deleteSticker} = useFetchStickers();
+    const { stickers, loading, error, deleteSticker } = useFetchStickers();
+    const navigate = useNavigate();
 
     if (loading) return <Loading />;
     if (error) return <ErrorMessage message={error} />;
 
+    const handleDelete = async (productId: number) => {
+        await deleteSticker(productId);
+    };
 
-    const handleDelete = async (stickerId: number) => {
-        await deleteSticker(stickerId);
+    const handleEdit = (productId: number) => {
+        navigate(`/admin/update/${productId}`);
     };
 
     return (
         <div className="w-full flex">
             <div className="grid gap-6 p-6 mx-auto mb-20">
-                {stickers.map((sticker) => (
+                {stickers.map((product) => (
                     <ProductCard
-                        key={sticker.id}
-                        product={sticker}
+                        key={product.id}
+                        product={product}
                         mode="admin"
-                        onEdit={() => console.log("Edit", sticker.id)}
-                        onDelete={() => handleDelete(sticker.id)}
+                        onEdit={() => handleEdit(product.id)}
+                        onDelete={() => handleDelete(product.id)}
                     />
                 ))}
             </div>

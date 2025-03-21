@@ -22,9 +22,9 @@ export default function ProductCard({ product, mode, onEdit, onDelete, onAddToCa
 
             <div className="text-center mt-4">
                 <h2 className="text-lg font-semibold">{product.title}</h2>
-                <p className="text-gray-600 text-sm">{product.category || "No category"}</p>
+                <p className="text-secondary-text text-sm">{product.category || "No category"}</p>
                 <p className="text-primary text-xl font-semibold mt-1">NOK {product.price}</p>
-                <p className="text-gray-500 text-sm mt-1">
+                <p className="text-secondary-text text-sm mt-1">
                     {product.stock_quantity} in stock | {product.sticker_type}
                 </p>
             </div>
@@ -34,7 +34,7 @@ export default function ProductCard({ product, mode, onEdit, onDelete, onAddToCa
                     <>
                         <button
                             onClick={onEdit}
-                            className="flex items-center gap-2 border-2 border-blue-400 text-blue-500 px-4 py-1 rounded-lg text-sm hover:bg-blue-100 transition"
+                            className="flex items-center gap-2 border-2 border-accent text-accent px-4 py-1 rounded-lg text-sm hover:bg-blue-100 transition"
                         >
                             <FaEdit />
                             Edit

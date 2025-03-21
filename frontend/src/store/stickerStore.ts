@@ -9,7 +9,8 @@ interface StickerState {
     error: string | null;
     fetchStickers: () => Promise<void>;
     fetchSpecificSticker: (productId: string) => Promise<void>;
-    deleteSticker: (stickerId: number) => Promise<void>;
+    deleteSticker: (productId: number) => Promise<void>;
+    updateSticker: (productId: string, updatedData: Sticker) => Promise<void>;
     setStickers: (stickers: Sticker[]) => void;
 }
 
@@ -26,8 +27,6 @@ export const useStickerStore = create<StickerState>((set) => ({
             if (!response.ok) throw new Error(`Failed to fetch stickers: ${response.status}`);
 
             const result = await response.json();
-            console.log("Fetched Stickers:", result);
-
             set({ stickers: Array.isArray(result) ? result : result.data || [], loading: false });
         } catch (err) {
             console.error("Error fetching stickers:", err);
@@ -54,6 +53,27 @@ export const useStickerStore = create<StickerState>((set) => ({
                 error: err instanceof Error ? err.message : "Unknown error",
                 specificSticker: null,
             });
+        }
+    },
+
+    updateSticker: async (productId: string, updatedData: Sticker) => {
+        try {
+            const response = await fetch(`${BASE_URL}/stickers/${productId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedData),
+            });
+
+            if (!response.ok) throw new Error(`Failed to update sticker: ${response.status}`);
+
+            set((state) => ({
+                stickers: state.stickers.map((sticker) =>
+                    sticker.id === Number(productId) ? { ...sticker, ...updatedData } : sticker
+                ),
+            }));
+        } catch (err) {
+            console.error("Error updating sticker:", err);
+            set({ error: err instanceof Error ? err.message : "Unknown error" });
         }
     },
 
