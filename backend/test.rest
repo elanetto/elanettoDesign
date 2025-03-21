@@ -2,7 +2,7 @@ GET http://localhost:5001/api/stickers
 
 ###
 
-DELETE http://localhost:5001/api/stickers/3
+DELETE http://localhost:5001/api/stickers/6
 Content-Type: application/json
 
 
@@ -11,18 +11,31 @@ POST http://localhost:5001/api/stickers
 Content-Type: application/json
 
 {
-  "title": "Minimalist Mountain Sticker",
-  "description": "A beautiful minimalist mountain design.",
-  "image_url": "https://example.com/minimalist-mountain.png",
-  "image_alt": "Minimalist Mountain Sticker",
-  "category": "Nature",
+  "title": "Gaming Controller Sticker",
+  "description": "A cool gaming controller sticker for gamers.",
+  "category": "Gaming",
   "sticker_type": "single",
-  "stock_quantity": 50,
-  "price": 3.99,
-  "discount": 0.50,
-  "height": 4.00,
-  "width": 4.00
+  "stock_quantity": 60,
+  "price": "4.25",
+  "discount": "0.75",
+  "height": "5.50",
+  "width": "5.50",
+  "images": [
+    {
+      "image_url": "https://example.com/controller1.jpg",
+      "image_alt": "Retro gaming controller"
+    },
+    {
+      "image_url": "https://example.com/controller2.jpg",
+      "image_alt": "Modern gaming controller"
+    },
+    {
+      "image_url": "https://example.com/controller3.jpg",
+      "image_alt": "Neon gaming controller"
+    }
+  ]
 }
+
 
 ###  Get all users
 GET http://localhost:5001/api/users
@@ -32,10 +45,10 @@ POST http://localhost:5001/api/users
 Content-Type: application/json
 
 {
-  "username": "john_doe",
+  "username": "admin_test",
   "avatar": "https://example.com/avatar.png",
-  "email": "john@example.com",
+  "email": "admin@example.com",
   "password": "securepassword",
-  "role": "customer"
+  "role": "admin"
 }
 
