@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
 import Sticker from "./Sticker.js";
+import StickerAlternative from "./StickerAlternative.js";
 
 const ProductImage = sequelize.define(
     "ProductImage",
@@ -13,11 +14,10 @@ const ProductImage = sequelize.define(
         product_id: {
             type: DataTypes.BIGINT.UNSIGNED,
             allowNull: false,
-            references: {
-                model: Sticker,
-                key: "id",
-            },
-            onDelete: "CASCADE",
+        },
+        product_type: {
+            type: DataTypes.ENUM("sticker", "sticker_alternative"),
+            allowNull: false,
         },
         image_url: {
             type: DataTypes.STRING(255),
@@ -29,7 +29,7 @@ const ProductImage = sequelize.define(
         },
         is_primary: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false, // One image should be primary
+            defaultValue: false,
         },
     },
     {
@@ -38,8 +38,11 @@ const ProductImage = sequelize.define(
     }
 );
 
-// Define association
-Sticker.hasMany(ProductImage, { foreignKey: "product_id", as: "images" });
+// Define relationships
+Sticker.hasMany(ProductImage, { foreignKey: "product_id", as: "images", scope: { product_type: "sticker" } });
 ProductImage.belongsTo(Sticker, { foreignKey: "product_id" });
+
+StickerAlternative.hasMany(ProductImage, { foreignKey: "product_id", as: "images", scope: { product_type: "sticker_alternative" } });
+ProductImage.belongsTo(StickerAlternative, { foreignKey: "product_id" });
 
 export default ProductImage;
