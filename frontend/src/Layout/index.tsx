@@ -1,15 +1,33 @@
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import MobileNavbar from "./MobileNavBar";
+import MobileHeader from "./MobileHeader";
 
 export default function Layout() {
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 480);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     return (
         <>
-            <Header/>
+            {!isMobile && <Header />}
+            {isMobile && <MobileHeader cartItemCount={3} />}
+
             <main>
                 <Outlet />
             </main>
-            <Footer />
+
+            {!isMobile && <Footer />}
+            {isMobile && <MobileNavbar />}
         </>
     );
 }
