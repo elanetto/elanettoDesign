@@ -108,10 +108,14 @@ export default function AddStickerForm() {
                 required
             >
                 <option value="">Select a category</option>
-                <option value="Gaming">Gaming</option>
-                <option value="Nature">Nature</option>
-                <option value="Cartoon">Cartoon</option>
-                <option value="Animals">Animals</option>
+                <option value="Cute">Cute</option>
+                <option value="Plants">Plants</option>
+                <option value="Geeky">Geeky</option>
+                <option value="IT">IT</option>
+                <option value="Journaling">Journaling</option>
+                <option value="Easter">Easter</option>
+                <option value="Halloween">Halloween</option>
+                <option value="Christmas">Christmas</option>
             </select>
 
             <label className="block font-medium mt-4">Sticker Type</label>
