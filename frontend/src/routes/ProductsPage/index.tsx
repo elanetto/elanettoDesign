@@ -1,5 +1,5 @@
 import ProductCard from "../../components/ProductCard";
-import {useFetchStickers} from "../../utilities/useFetchStickers";
+import {useFetchStickers} from "../../hooks/useFetchStickers";
 import {Loading} from "../../utilities/loading";
 import {ErrorMessage} from "../../utilities/errorMessage";
 

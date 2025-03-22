@@ -17,7 +17,8 @@ export type Sticker = {
 export type ProductImage = {
     id: number;
     product_id: number;
-    image_url: string;
-    image_alt: string;
+    image_url: string; // ✅ Ensure `image_url` exists here
+    image_alt: string; // ✅ Ensure `image_alt` exists here
     is_primary: boolean;
 };
+

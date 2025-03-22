@@ -82,7 +82,7 @@ const router = createBrowserRouter([
                 element: <AddProductPage />,
             },
             {
-                path: "update-product",
+                path: "update/:productId",
                 element: <EditProductPage />,
             }
         ]
