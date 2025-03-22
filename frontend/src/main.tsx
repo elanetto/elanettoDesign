@@ -52,6 +52,10 @@ const router = createBrowserRouter([
                 ]
             },
             {
+                path: "favourites",
+                element: <p>Favourites</p>,
+            },
+            {
                 path: "profile/:userId",
                 element: <ProfilePage />,
             },
