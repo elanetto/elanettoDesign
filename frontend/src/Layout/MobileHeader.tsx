@@ -1,4 +1,5 @@
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import {Link} from "react-router-dom";
 
 type MobileHeaderProps = {
     cartItemCount: number;
@@ -15,9 +16,10 @@ export default function MobileHeader({ cartItemCount }: MobileHeaderProps) {
                 </button>
 
                 <div className="relative">
-                    <button className="text-black hover:text-gray-600">
+                    <Link className="text-black hover:text-gray-600"
+                    to="/cart">
                         <FaShoppingCart size={20} />
-                    </button>
+                    </Link>
                     {cartItemCount > 0 && (
                         <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                             {cartItemCount}
