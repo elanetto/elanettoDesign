@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,6 +10,7 @@ html, body, #root {
     padding: 0;
     display: flex;
     flex-direction: column;
+    font-family: 'Fredoka', sans-serif;
 }
 
 main {

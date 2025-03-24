@@ -8,7 +8,7 @@ export default function MobileNavbar() {
                 to="/"
                 className={({ isActive }) =>
                     `flex flex-col items-center text-sm ${
-                        isActive ? "text-red-500 font-semibold" : "text-gray-500"
+                        isActive ? "text-primary font-semibold" : "text-gray-500"
                     }`
                 }
             >
@@ -20,7 +20,7 @@ export default function MobileNavbar() {
                 to="/products"
                 className={({ isActive }) =>
                     `flex flex-col items-center text-sm ${
-                        isActive ? "text-red-500 font-semibold" : "text-gray-500"
+                        isActive ? "text-primary" : "text-gray-500"
                     }`
                 }
             >
@@ -32,7 +32,7 @@ export default function MobileNavbar() {
                 to="/favourites"
                 className={({ isActive }) =>
                     `flex flex-col items-center text-sm ${
-                        isActive ? "text-red-500 font-semibold" : "text-gray-500"
+                        isActive ? "text-primary font-semibold" : "text-gray-500"
                     }`
                 }
             >
@@ -44,7 +44,7 @@ export default function MobileNavbar() {
                 to="/profile/exampleUser"
                 className={({ isActive }) =>
                     `flex flex-col items-center text-sm ${
-                        isActive ? "text-red-500 font-semibold" : "text-gray-500"
+                        isActive ? "text-primary font-semibold" : "text-gray-500"
                     }`
                 }
             >

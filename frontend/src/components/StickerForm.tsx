@@ -1,7 +1,14 @@
-import { useState } from "react";
-import {BASE_URL} from "../constants";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useStickerStore } from "../store/stickerStore";
+import { BASE_URL } from "../constants";
+import { Sticker } from "../types/sticker";
 
-export default function AddStickerForm() {
+export default function StickerForm() {
+    const { productId } = useParams();
+    const navigate = useNavigate();
+    const { specificSticker, fetchSpecificSticker, updateSticker } = useStickerStore();
+
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -12,8 +19,37 @@ export default function AddStickerForm() {
         discount: "",
         height: "",
         width: "",
-        images: [{ image_url: "", image_alt: "" }]
+        images: [{ image_url: "", image_alt: "" }],
     });
+
+    useEffect(() => {
+        if (productId) {
+            fetchSpecificSticker(productId);
+        }
+    }, [productId, fetchSpecificSticker]);
+
+    useEffect(() => {
+        if (specificSticker && productId) {
+            setFormData({
+                title: specificSticker.title ?? "",
+                description: specificSticker.description ?? "",
+                category: specificSticker.category ?? "",
+                sticker_type: specificSticker.sticker_type ?? "single",
+                stock_quantity: specificSticker.stock_quantity ?? 1,
+                price: String(specificSticker.price ?? ""),
+                discount: String(specificSticker.discount ?? ""),
+                height: String(specificSticker.height ?? ""),
+                width: String(specificSticker.width ?? ""),
+                images: specificSticker.images?.length > 0
+                    ? specificSticker.images.map((img) => ({
+                        image_url: img.image_url || "",
+                        image_alt: img.image_alt || "",
+                    }))
+                    : [{ image_url: "", image_alt: "" }]
+
+            });
+        }
+    }, [specificSticker, productId]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,48 +73,58 @@ export default function AddStickerForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const stickerData = {
+        const stickerData: Sticker = {
             ...formData,
+            id: Number(productId) || 0,
             stock_quantity: Number(formData.stock_quantity),
-            price: parseFloat(formData.price).toFixed(2),
-            discount: parseFloat(formData.discount).toFixed(2),
-            height: parseFloat(formData.height).toFixed(2),
-            width: parseFloat(formData.width).toFixed(2),
-            images: formData.images.filter(img => img.image_url.trim() !== "")
+            price: parseFloat(formData.price) || 0,
+            discount: parseFloat(formData.discount) || 0,
+            height: parseFloat(formData.height) || 0,
+            width: parseFloat(formData.width) || 0,
+            images: formData.images
+                .filter(img => img.image_url.trim() !== "")
+                .map((img, index) => ({
+                    id: index,
+                    product_id: Number(productId) || 0,
+                    image_url: img.image_url,
+                    image_alt: img.image_alt,
+                    is_primary: index === 0,
+                })),
+
+            updated_at: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+            sticker_type: formData.sticker_type as "single" | "sheet",
         };
 
         try {
-            const response = await fetch(`${BASE_URL}/stickers`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(stickerData),
-            });
+            if (productId) {
+                await updateSticker(productId, stickerData);
+                alert("Sticker updated successfully!");
+            } else {
+                const response = await fetch(`${BASE_URL}/stickers`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(stickerData),
+                });
 
-            if (!response.ok) {
-                throw new Error(`Failed to add sticker: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to add sticker: ${response.status}`);
+                }
+
+                alert("Sticker added successfully!");
             }
 
-            alert("Sticker added successfully!");
-            setFormData({
-                title: "",
-                description: "",
-                category: "",
-                sticker_type: "single",
-                stock_quantity: 1,
-                price: "",
-                discount: "",
-                height: "",
-                width: "",
-                images: [{ image_url: "", image_alt: "" }]
-            });
+            navigate("/admin");
         } catch (error) {
-            console.error("Error adding sticker:", error);
+            console.error("Error submitting sticker:", error);
         }
     };
 
     return (
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 w-full max-w-lg">
-            <label className="block font-medium">Product Name</label>
+            <h2 className="text-lg font-semibold">{productId ? "Edit Sticker" : "Add New Sticker"}</h2>
+
+            <label className="block font-medium mt-4">Product Name</label>
             <input
                 type="text"
                 name="title"
@@ -144,7 +190,6 @@ export default function AddStickerForm() {
                 value={formData.price}
                 onChange={handleChange}
                 className="w-full border p-2 rounded-md mt-1"
-                placeholder="Price"
                 required
             />
 
@@ -155,7 +200,6 @@ export default function AddStickerForm() {
                 value={formData.discount}
                 onChange={handleChange}
                 className="w-full border p-2 rounded-md mt-1"
-                placeholder="Discount"
             />
 
             <div className="grid grid-cols-2 gap-4 mt-4">
@@ -167,7 +211,6 @@ export default function AddStickerForm() {
                         value={formData.height}
                         onChange={handleChange}
                         className="w-full border p-2 rounded-md mt-1"
-                        placeholder="Height"
                         required
                     />
                 </div>
@@ -179,12 +222,11 @@ export default function AddStickerForm() {
                         value={formData.width}
                         onChange={handleChange}
                         className="w-full border p-2 rounded-md mt-1"
-                        placeholder="Width"
                         required
                     />
                 </div>
             </div>
-
+            {/* Image Inputs Section */}
             <label className="block font-medium mt-4">Image URLs</label>
             {formData.images.map((image, index) => (
                 <div key={index} className="flex items-center gap-2 mt-2">
@@ -213,6 +255,7 @@ export default function AddStickerForm() {
                 + Add More Images
             </button>
 
+            {/* Image Preview Section */}
             <div className="mt-4 grid grid-cols-3 gap-4">
                 {formData.images.map((image, index) =>
                     image.image_url ? (
@@ -227,7 +270,7 @@ export default function AddStickerForm() {
             </div>
 
             <button type="submit" className="w-full bg-red-400 text-white py-2 mt-4 rounded-lg">
-                Add Sticker
+                {productId ? "Update Sticker" : "Add Sticker"}
             </button>
         </form>
     );

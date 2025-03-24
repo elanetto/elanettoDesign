@@ -8,6 +8,7 @@ import sequelize from "./config/db.js";
 import stickerAlternativeRoutes from "./routes/stickerAlternativeRoutes.js";
 import bookmarkRoutes from "./routes/bookmarkRoutes.js";
 import bundleRoutes from "./routes/bundleRoutes.js";
+import favoriteRoutes from "./routes/favoriteRoutes.js";
 
 // Sync the database (this updates the structure automatically)
 sequelize.sync({ alter: true })
@@ -27,6 +28,7 @@ app.use("/api/stickers", stickerRoutes);
 app.use("/api/sticker-alternatives", stickerAlternativeRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
 app.use("/api/bundles", bundleRoutes);
+app.use("/api/favorites", favoriteRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.get("/", (req, res) => {

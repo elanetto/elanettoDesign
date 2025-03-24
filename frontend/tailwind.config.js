@@ -13,6 +13,20 @@ export default {
                 lg: '756px',
                 xl: '1200px'
             },
+            colors: {
+                primary: "#DB6861",
+                secondary: "#FDEDF2",
+                accent: "#61B5DB",
+                "primary-text": "#FFFFFF",
+                "secondary-text": "#6B7280",
+            },
+            fontFamily: {
+                fredoka: ["Fredoka", "sans-serif"],
+            },
+            fontSize: {
+                header: "24px",
+                paragraph: "14px",
+            },
         },
     },
     plugins: [],
