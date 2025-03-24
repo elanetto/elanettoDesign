@@ -1,0 +1,73 @@
+    10	Anette Therese Lindberg <101054274+elanetto@users.noreply.github.com>
+     4	Helflaa <146756162+Helflaa@users.noreply.github.com>
+    39	Panida Paethanom <143201084+Panida287@users.noreply.github.com>
+     8	elanetto <101054274+elanetto@users.noreply.github.com>
+Anette Therese Lindberg (10):
+      Create README.md
+      Update README.md
+      Update README.md
+      Update README.md
+      Merge pull request #45 from elanetto/16-frontend-admin-dashboard-ui
+      Merge pull request #55 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #56 from elanetto/Frontend-Admin-Dashboard-UI
+      Merge pull request #61 from elanetto/60-backend-crud-for-favourites
+      Merge pull request #62 from elanetto/backend
+      Merge pull request #63 from elanetto/Features
+
+Helflaa (4):
+      Feat: created CRUD operation for stickers
+      added CRUD opertation for user
+      Merge branch 'backend' into 8-implement-crud-for-products-backend-api
+      Feat: implement cart system
+
+Panida Paethanom (39):
+      Merge pull request #29 from elanetto/8-implement-crud-for-products-backend-api
+      Merge pull request #31 from elanetto/30-implement-crud-for-category-backend-api
+      Merge pull request #35 from elanetto/8-implement-crud-for-products-backend-api
+      Merge pull request #33 from elanetto/32-implementing-sql-product_images-table-to-products-api
+      Merge pull request #36 from elanetto/backend
+      feat: Added pages and routes
+      config tailwind
+      feat: added Layout for admin page
+      Merge pull request #40 from elanetto/34-implement-crud-for-sticker_alternatives
+      Merge pull request #41 from elanetto/39-implement-crud-for-bookmarks
+      Merge pull request #43 from elanetto/42-implement-crud-for-bundle
+      feat: implemented product management for admin
+      Merge pull request #37 from elanetto/4-implement-a-basic-routing-structure-using-react-router
+      Merge pull request #46 from elanetto/44-implement-crud-for-category
+      Update .gitignore
+      Merge branch 'Features' of https://github.com/elanetto/elanettoDesign into Features
+      Update .gitignore
+      backend and frontend update
+      Create package-lock 4.json
+      Merge pull request #47 from elanetto/Features
+      Merge pull request #48 from elanetto/backend
+      deleted duplucated files
+      chore: config screen sizes for tailwind
+      feat: added mobile nav bar and header
+      refactored: made ProductCard reusable
+      feat: fetch and display products
+      Merge pull request #49 from elanetto/11-fetch-and-display-products-from-backend-api
+      fixing missing files
+      Merge pull request #50 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #51 from elanetto/Features
+      Merge pull request #52 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #53 from elanetto/Features
+      Merge pull request #54 from elanetto/Development
+      chore: config tailwind for styling guide
+      refactor: adjusted fetchSticker Function
+      update update sticker route
+      chore: cleaned up comments and linting
+      feat: added edit sticker form
+      Merge pull request #59 from elanetto/develop-shopping-cart-system
+
+elanetto (8):
+      Initial setup: Vite React project with TypeScript and Tailwind. The project is structured with frontend and backend folders. Run the project using npm run dev from the root.
+      Added Category CRUD to backend API
+      Added product_images table to API and edited stickers API to implement the possibility to add multiple images to each product
+      Added sticker Alternatives to backend
+      Added bookmark CRUD to backend
+      Added bundles CRUD to backend
+      Added CRUD to both category and product_categories tables from the SQL database
+      added backend CRUD for favourites
+
