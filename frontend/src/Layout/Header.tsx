@@ -1,7 +1,9 @@
-import { NavLink, Link } from "react-router-dom";
-import { FaSearch, FaShoppingCart, FaUser, FaHeart } from "react-icons/fa";
+import {NavLink, Link} from "react-router-dom";
+import {FaSearch, FaShoppingCart, FaUser, FaHeart} from "react-icons/fa";
+import {useCartStore} from "../store/CartStore";
 
 export default function Header() {
+    const {getTotalItems} = useCartStore();
     return (
         <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
             <Link to="/" className="flex items-center gap-2">
@@ -13,7 +15,7 @@ export default function Header() {
                     <li>
                         <NavLink
                             to="/"
-                            className={({ isActive }) =>
+                            className={({isActive}) =>
                                 `transition-all ${isActive ? "text-primary font-semibold" : "hover:text-primary"}`
                             }
                         >
@@ -23,7 +25,7 @@ export default function Header() {
                     <li>
                         <NavLink
                             to="/products"
-                            className={({ isActive }) =>
+                            className={({isActive}) =>
                                 `transition-all ${isActive ? "text-primary font-semibold" : "hover:text-primary"}`
                             }
                         >
@@ -38,16 +40,21 @@ export default function Header() {
 
                 <Link to="/favourites" className="relative">
                     <FaHeart className="text-gray-700 cursor-pointer" />
-                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                    <span
+                        className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
                         5
                     </span>
                 </Link>
 
                 <Link to="/cart" className="relative">
                     <FaShoppingCart className="text-gray-700 cursor-pointer" />
-                    <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                        3
-                    </span>
+                    {getTotalItems() > 0 && (
+                        <span
+                            className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
+                        >
+                            {getTotalItems()}
+                        </span>
+                    )}
                 </Link>
 
                 <Link to="/profile/exampleUser">
