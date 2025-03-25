@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://localhost:5001/api';
+export const BASE_URL = 'https://elanettodesign-api.onrender.com/api';
