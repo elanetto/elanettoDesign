@@ -1,7 +1,9 @@
-import { NavLink, Link } from "react-router-dom";
-import { FaSearch, FaShoppingCart, FaUser, FaHeart } from "react-icons/fa";
+import {NavLink, Link} from "react-router-dom";
+import {FaSearch, FaShoppingCart, FaUser, FaHeart} from "react-icons/fa";
+import {useCartStore} from "../store/CartStore";
 
 export default function Header() {
+  const {getTotalItems} = useCartStore();
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <Link to="/" className="flex items-center gap-2">
@@ -42,19 +44,26 @@ export default function Header() {
       <div className="flex items-center gap-4 ">
         <FaSearch className="primary-text cursor-pointer hover:text-secondary-text" />
 
-        <Link to="/favourites" className="relative">
-          <FaHeart className="primary-text cursor-pointer hover:text-secondary-text" />
-          <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-            5
-          </span>
-        </Link>
 
-        <Link to="/cart" className="relative">
-          <FaShoppingCart className="primary-text cursor-pointer hover:text-secondary-text" />
-          <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-            3
-          </span>
-        </Link>
+                <Link to="/favourites" className="relative">
+                    <FaHeart className="primary-text cursor-pointer hover:text-secondary-text" />
+                    <span
+                        className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                        5
+                    </span>
+                </Link>
+
+                <Link to="/cart" className="relative">
+                    <FaShoppingCart className="primary-text cursor-pointer hover:text-secondary-text" />
+                    {getTotalItems() > 0 && (
+                        <span
+                            className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
+                        >
+                            {getTotalItems()}
+                        </span>
+                    )}
+                </Link>
+
 
         <Link to="/profile/exampleUser">
           <FaUser className="primary-text cursor-pointer hover:text-secondary-text" />

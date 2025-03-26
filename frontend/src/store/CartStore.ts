@@ -1,16 +1,18 @@
-import {create} from "zustand";
-import {persist} from "zustand/middleware";
-import { CartItem } from "../types/cart";
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { Sticker } from "../types/sticker";
+
+export type CartItem = Sticker & { quantity: number };
 
 interface CartStore {
-
     cart: CartItem[];
-    addToCart: (product: CartItem) => void;
+    addToCart: (product: Sticker) => void;
     removeFromCart: (productId: number) => void;
     itemIncrement: (productId: number) => void;
     itemDecrement: (productId: number) => void;
     getTotalPrice: () => number;
     clearCart: () => void;
+    getTotalItems: () => number;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -55,19 +57,23 @@ export const useCartStore = create<CartStore>()(
                         )
                         .filter((item) => item.quantity > 0),
                 })),
+            getTotalItems: () => {
+                const { cart } = get();
+                return cart.reduce((total, item) => total + item.quantity, 0);
+            },
             getTotalPrice: () => {
                 const { cart } = get();
                 return cart.reduce(
-                    (total, item) => total + item.quantity * (item.discountedPrice || item.price),
+                    (total, item) =>
+                        total + item.quantity * (item.discount > 0 ? item.discount : item.price),
                     0
                 );
             },
             clearCart: () => set({ cart: [] }),
         }),
         {
-            name: "cart-storage",
-            getStorage: () => localStorage,
+            name: "elanetto-cart-storage",
+            storage: createJSONStorage(() => localStorage),
         }
     )
 );
-
