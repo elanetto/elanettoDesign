@@ -11,7 +11,7 @@ export default function Header() {
       </Link>
 
       <nav>
-        <ul className="flex space-x-6 text-secondary-text text-sm font-medium">
+        <ul className="flex space-x-6 text-black text-sm font-medium">
           <li>
             <NavLink
               to="/"
