@@ -9,13 +9,14 @@ export default function MobileHeader() {
         <header className="flex justify-between items-center p-4 bg-white shadow-md">
             <h1 className="text-lg font-semibold text-primary">ElanettoDesign</h1>
 
-            <div className="flex items-center gap-4">
-                <button className="text-black hover:text-gray-600">
-                    <FaSearch size={18} />
-                </button>
+      <div className="flex items-center gap-4">
+        <button className="text-black hover:text-secondary-text">
+          <FaSearch size={18} />
+        </button>
+
 
                 <div className="relative">
-                    <Link className="text-black hover:text-gray-600"
+                    <Link className="text-black hover:text-secondary-text"
                     to="/cart">
                         <FaShoppingCart size={20} />
                     </Link>
@@ -30,4 +31,5 @@ export default function MobileHeader() {
             </div>
         </header>
     );
+
 }

@@ -31,7 +31,7 @@ export default function ProductCard({
 
     return (
         <div className="bg-white shadow-lg rounded-2xl p-4 w-64 flex flex-col items-center">
-            <div className="bg-pink-100 rounded-xl p-4 w-full flex justify-center">
+            <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
                 <img
                     src={image}
                     alt={imageAlt}
