@@ -39,25 +39,25 @@ export default function Header() {
         </ul>
       </nav>
 
-      <div className="flex items-center gap-4">
-        <FaSearch className="primary-text cursor-pointer" />
+      <div className="flex items-center gap-4 ">
+        <FaSearch className="primary-text cursor-pointer hover:text-secondary-text" />
 
         <Link to="/favourites" className="relative">
-          <FaHeart className="primary-text cursor-pointer" />
+          <FaHeart className="primary-text cursor-pointer hover:text-secondary-text" />
           <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
             5
           </span>
         </Link>
 
         <Link to="/cart" className="relative">
-          <FaShoppingCart className="primary-text cursor-pointer" />
+          <FaShoppingCart className="primary-text cursor-pointer hover:text-secondary-text" />
           <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
             3
           </span>
         </Link>
 
         <Link to="/profile/exampleUser">
-          <FaUser className="primary-text cursor-pointer" />
+          <FaUser className="primary-text cursor-pointer hover:text-secondary-text" />
         </Link>
       </div>
     </header>
