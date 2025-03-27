@@ -3,12 +3,13 @@ import {ErrorMessage} from "../../utilities/errorMessage";
 import {useFetchStickers} from "../../hooks/useFetchStickers";
 import ProductCard from "../../components/ProductCard";
 import {useNavigate} from "react-router-dom";
-import {Search} from "../../components/Search.tsx";
+import {Search} from "../../components/Search";
 import {useEffect, useState} from "react";
+import { Sticker } from "../../types/sticker";
 
 export default function AdminPage() {
     const {stickers, loading, error, deleteSticker} = useFetchStickers();
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState<Sticker[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {

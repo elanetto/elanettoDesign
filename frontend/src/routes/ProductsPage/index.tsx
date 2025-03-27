@@ -2,12 +2,13 @@ import ProductCard from "../../components/ProductCard";
 import {useFetchStickers} from "../../hooks/useFetchStickers";
 import {Loading} from "../../utilities/loading";
 import {ErrorMessage} from "../../utilities/errorMessage";
-import {Search} from "../../components/Search.tsx";
+import {Search} from "../../components/Search";
 import {useState, useEffect} from "react";
+import { Sticker } from "../../types/sticker";
 
 export default function ShopPage() {
     const {stickers, loading, error} = useFetchStickers();
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState<Sticker[]>([]);
 
 
     useEffect(() => {
@@ -16,10 +17,6 @@ export default function ShopPage() {
 
     if (loading) return <Loading/>;
     if (error) return <ErrorMessage message={error}/>;
-
-    const addToCart = (stickerId: number) => {
-        console.log(`Adding sticker ${stickerId} to cart`);
-    };
 
     return (
         <>
@@ -34,7 +31,6 @@ export default function ShopPage() {
                                 key={sticker.id}
                                 product={sticker}
                                 mode="customer"
-                                onAddToCart={() => addToCart(sticker.id)}
                             />
                         ))
                     ) : (
