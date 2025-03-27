@@ -82,7 +82,7 @@ export const getProductsByCategory = async (req, res) => {
             product_ids: productIds,
         });
     } catch (error) {
-        console.error("💥 Error in getProductsByCategory:", error);
+        console.error("Error in getProductsByCategory:", error);
         return res.status(500).json({ error: "Failed to fetch products by category." });
     }
 };

@@ -6,7 +6,7 @@ interface CategoryCardProps {
 }
 
 export default function CategoryCard({ name, image }: CategoryCardProps) {
-  const fallbackImage = "/journaling_category_photo.png"; // Put a default image in your public/images folder
+  const fallbackImage = "/category_default.png";
 
   return (
     <Link to={`/category/${name}`} className="block group">
