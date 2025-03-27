@@ -2,6 +2,7 @@ import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 interface User {
     id: number;
@@ -19,6 +20,7 @@ interface LoginResponse {
 export default function LoginForm() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [showPassword, setShowPassword] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const navigate = useNavigate();
 
@@ -29,7 +31,8 @@ export default function LoginForm() {
         setError("");
 
         if (!validateEmail(email)) {
-            return setError("Please enter a valid email address.");
+            setError("Please enter a valid email address.");
+            return;
         }
 
         try {
@@ -44,9 +47,9 @@ export default function LoginForm() {
             localStorage.setItem("user", JSON.stringify(user));
 
             if (user.role === "admin") {
-                navigate("/admin/dashboard");
+                navigate("/admin");
             } else {
-                navigate("/customer/dashboard");
+                navigate("/");
             }
         } catch (err) {
             const axiosError = err as AxiosError;
@@ -78,13 +81,23 @@ export default function LoginForm() {
 
                     <div>
                         <label className="text-sm">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full border-b-2 border-black focus:outline-none p-1"
-                            required
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full border-b-2 border-black focus:outline-none p-1 pr-10"
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-600"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? <FiEyeOff /> : <FiEye />}
+                            </button>
+                        </div>
                     </div>
 
                     {error && <p className="text-red-500 text-sm">{error}</p>}
