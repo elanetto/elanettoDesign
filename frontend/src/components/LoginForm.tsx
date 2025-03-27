@@ -111,7 +111,7 @@ export default function LoginForm() {
                 </form>
 
                 <p className="text-sm mt-4">
-                    Not a member? <a href="/signup" className="text-[#D26E63]">Sign up</a>
+                    Not a member? <Link to="/signup" className="text-[#D26E63]">Sign up</Link>
                 </p>
 
                 <div className="flex justify-center mt-4 space-x-4 text-xl">
