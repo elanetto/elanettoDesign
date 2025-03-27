@@ -16,6 +16,11 @@ const Category = sequelize.define("Category", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
     },
+    is_active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false,
+    },    
 }, {
     tableName: "categories",
     timestamps: false,

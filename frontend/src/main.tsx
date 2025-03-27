@@ -15,6 +15,8 @@ import RegisterPage from "./routes/RegisterPage";
 import ProductsPage from "./routes/ProductsPage";
 import ProfilePage from "./routes/ProfilePage";
 import SpecificProductPage from "./routes/SpecificProductPage";
+import AllCategoriesPage from "./routes/AllCategoriesPage";
+import CategoryDetailsPage from "./routes/CategoryDetailsPage";
 import Layout from "./Layout";
 import AdminLayout from "./routes/AdminPage/AdminLayout";
 
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
                 path: "",
                 element: <App />
             },
+            {
+                path: "category",
+                element: <AllCategoriesPage />,
+            },
+            {
+                path: "category/:name",
+                element: <CategoryDetailsPage />,
+            },               
             {
                 path: "products",
                 element: <ProductsPage />,
