@@ -10,7 +10,7 @@ const User = sequelize.define("User", {
     username: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        unique: true,
+        // unique: true,
     },
     avatar: {
         type: DataTypes.STRING(255),
