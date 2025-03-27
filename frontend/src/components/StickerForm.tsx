@@ -8,6 +8,7 @@ export default function StickerForm() {
     const { productId } = useParams();
     const navigate = useNavigate();
     const { specificSticker, fetchSpecificSticker, updateSticker } = useStickerStore();
+    const [categories, setCategories] = useState<string[]>([]);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -27,6 +28,20 @@ export default function StickerForm() {
             fetchSpecificSticker(productId);
         }
     }, [productId, fetchSpecificSticker]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch(`${BASE_URL}/categories`);
+                const data = await response.json();
+                setCategories(data.map((cat: { name: string }) => cat.name));
+            } catch (error) {
+                console.error("Failed to fetch categories:", error);
+            }
+        };
+    
+        fetchCategories();
+    }, []);    
 
     useEffect(() => {
         if (specificSticker && productId) {
@@ -153,11 +168,12 @@ export default function StickerForm() {
                 className="w-full border p-2 rounded-md mt-1"
                 required
             >
-                <option value="">Select a category</option>
-                <option value="Gaming">Gaming</option>
-                <option value="Nature">Nature</option>
-                <option value="Cartoon">Cartoon</option>
-                <option value="Animals">Animals</option>
+                {categories.map((category) => (
+                    <option key={category} value={category}>
+                        {category}
+                    </option>
+                ))}
+
             </select>
 
             <label className="block font-medium mt-4">Sticker Type</label>

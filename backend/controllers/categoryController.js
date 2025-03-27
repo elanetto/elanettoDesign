@@ -3,13 +3,16 @@ import ProductCategory from "../models/ProductCategory.js";
 
 export const getAllCategories = async (req, res) => {
     try {
-        const categories = await Category.findAll();
+        const categories = await Category.findAll({
+            where: { is_active: true }, // Only show active categories
+        });
         res.json(categories);
     } catch (error) {
         console.error("Error fetching categories:", error);
         res.status(500).json({ error: "Failed to fetch categories." });
     }
 };
+
 
 export const createCategory = async (req, res) => {
     try {
@@ -51,18 +54,36 @@ export const getProductsByCategory = async (req, res) => {
     try {
         const { categoryName, product_type } = req.params;
 
-        const category = await Category.findOne({ where: { name: categoryName } });
-        if (!category) return res.status(404).json({ error: "Category not found" });
+        // Check valid product_type
+        if (!["sticker", "bookmark", "bundle"].includes(product_type)) {
+            return res.status(400).json({ error: `Invalid product type '${product_type}'` });
+        }
 
+        // Find the category
+        const category = await Category.findOne({ where: { name: categoryName } });
+        if (!category) {
+            return res.status(404).json({ error: `Category '${categoryName}' not found` });
+        }
+
+        // Find assigned products
         const assignments = await ProductCategory.findAll({
-            where: { category_id: category.id, product_type }
+            where: {
+                category_id: category.id,
+                product_type,
+            },
         });
 
+        // Even if it's empty, that's okay!
         const productIds = assignments.map((a) => a.product_id);
 
-        res.json({ product_type, category: categoryName, product_ids: productIds });
+        return res.json({
+            product_type,
+            category: categoryName,
+            product_ids: productIds,
+        });
     } catch (error) {
-        console.error("Error fetching category products:", error);
-        res.status(500).json({ error: "Failed to fetch products by category." });
+        console.error("Error in getProductsByCategory:", error);
+        return res.status(500).json({ error: "Failed to fetch products by category." });
     }
 };
+
