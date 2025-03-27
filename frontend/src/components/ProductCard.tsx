@@ -4,10 +4,11 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { AddToCart } from "./AddToCart";
 
 type ProductCardProps = {
-  product: Sticker | CartItem;
-  mode: "admin" | "customer" | "checkout";
-  onEdit?: () => void;
-  onDelete?: () => void;
+    product: Sticker | CartItem;
+    mode: "admin" | "customer" | "checkout";
+    onEdit?: () => void;
+    onDelete?: () => void;
+    onAddToCart?: () => void;
 };
 
 export default function ProductCard({

@@ -1,6 +1,43 @@
+import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa";
+import { BASE_URL } from "../constants";
 
 export default function Footer() {
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [message, setMessage] = useState("");
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setMessage("");
+
+        if (!name || !email) {
+            setMessage("Please fill in both fields.");
+            return;
+        }
+
+        try {
+            const res = await fetch(`${BASE_URL}/newsletter/subscribe`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                setMessage("Thanks for subscribing! 🎉");
+                setName("");
+                setEmail("");
+            } else {
+                setMessage(data.message || "Something went wrong.");
+            }
+        } catch (err) {
+            console.error("Newsletter error:", err);
+            setMessage("Could not subscribe. Please try again.");
+        }
+    };
+
     return (
         <footer className="bg-gray-900 text-white py-10 px-6">
             <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -33,14 +70,34 @@ export default function Footer() {
 
                 <div>
                     <h2 className="text-lg font-semibold">Newsletter</h2>
-                    <p className="text-sm text-gray-400 mt-2">Subscribe for updates and exclusive offers!</p>
-                    <div className="flex items-center mt-3 bg-gray-800 p-2 rounded-full">
+                    <p className="text-sm text-gray-400 mt-2">
+                        Subscribe for updates and exclusive offers!
+                    </p>
+                    <form onSubmit={handleSubscribe} className="mt-3 space-y-2">
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Your first name"
+                            className="w-full p-2 rounded bg-gray-800 text-white placeholder-gray-400 text-sm"
+                        />
                         <input
                             type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="Your email"
-                            className="bg-transparent flex-1 text-sm px-3 text-white focus:outline-none placeholder-gray-500"
+                            className="w-full p-2 rounded bg-gray-800 text-white placeholder-gray-400 text-sm"
                         />
-                    </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-primary text-white rounded py-2 text-sm hover:bg-red-500 transition"
+                        >
+                            Subscribe
+                        </button>
+                        {message && (
+                            <p className="text-sm text-gray-300 mt-2">{message}</p>
+                        )}
+                    </form>
                 </div>
             </div>
 

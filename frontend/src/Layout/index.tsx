@@ -20,7 +20,7 @@ export default function Layout() {
     return (
         <>
             {!isMobile && <Header />}
-            {isMobile && <MobileHeader cartItemCount={3} />}
+            {isMobile && <MobileHeader />}
 
             <main>
                 <Outlet />
