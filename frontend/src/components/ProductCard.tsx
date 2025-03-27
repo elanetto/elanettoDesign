@@ -8,6 +8,7 @@ type ProductCardProps = {
     mode: "admin" | "customer" | "checkout";
     onEdit?: () => void;
     onDelete?: () => void;
+    onAddToCart?: () => void;
 };
 
 export default function ProductCard({
