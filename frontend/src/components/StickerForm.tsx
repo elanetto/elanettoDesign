@@ -3,18 +3,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useStickerStore } from "../store/stickerStore";
 import { BASE_URL } from "../constants";
 import { Sticker } from "../types/sticker";
+import { toast } from "react-hot-toast";
 
 export default function StickerForm() {
     const { productId } = useParams();
     const navigate = useNavigate();
     const { specificSticker, fetchSpecificSticker, updateSticker } = useStickerStore();
-    const [categories, setCategories] = useState<string[]>([]);
+    const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
 
     const [formData, setFormData] = useState({
         title: "",
         description: "",
         category: "",
         sticker_type: "single",
+        product_type: "sticker",
         stock_quantity: 1,
         price: "",
         discount: "",
@@ -34,14 +36,14 @@ export default function StickerForm() {
             try {
                 const response = await fetch(`${BASE_URL}/categories`);
                 const data = await response.json();
-                setCategories(data.map((cat: { name: string }) => cat.name));
+                setCategories(data);
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
             }
         };
-    
+
         fetchCategories();
-    }, []);    
+    }, []);
 
     useEffect(() => {
         if (specificSticker && productId) {
@@ -50,6 +52,7 @@ export default function StickerForm() {
                 description: specificSticker.description ?? "",
                 category: specificSticker.category ?? "",
                 sticker_type: specificSticker.sticker_type ?? "single",
+                product_type: "sticker",
                 stock_quantity: specificSticker.stock_quantity ?? 1,
                 price: String(specificSticker.price ?? ""),
                 discount: String(specificSticker.discount ?? ""),
@@ -61,7 +64,6 @@ export default function StickerForm() {
                         image_alt: img.image_alt || "",
                     }))
                     : [{ image_url: "", image_alt: "" }]
-
             });
         }
     }, [specificSticker, productId]);
@@ -105,16 +107,31 @@ export default function StickerForm() {
                     image_alt: img.image_alt,
                     is_primary: index === 0,
                 })),
-
             updated_at: new Date().toISOString(),
             created_at: new Date().toISOString(),
             sticker_type: formData.sticker_type as "single" | "sheet",
         };
 
         try {
+            const categoryId = categories.find((cat) => cat.name === formData.category)?.id;
+
             if (productId) {
                 await updateSticker(productId, stickerData);
-                alert("Sticker updated successfully!");
+
+                if (categoryId) {
+                    await fetch(`${BASE_URL}/categories/assign`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            product_id: Number(productId),
+                            category_id: categoryId,
+                            product_type: "sticker",
+                        }),
+                    });
+                }
+
+                toast.success("Sticker updated successfully!");
+
             } else {
                 const response = await fetch(`${BASE_URL}/stickers`, {
                     method: "POST",
@@ -126,7 +143,22 @@ export default function StickerForm() {
                     throw new Error(`Failed to add sticker: ${response.status}`);
                 }
 
-                alert("Sticker added successfully!");
+                const created = await response.json();
+                const createdStickerId = created.id;
+
+                if (categoryId) {
+                    await fetch(`${BASE_URL}/categories/assign`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            product_id: createdStickerId,
+                            category_id: categoryId,
+                            product_type: "sticker",
+                        }),
+                    });
+                }
+
+                toast.success("Sticker added and category assigned successfully!");
             }
 
             navigate("/admin");
@@ -169,11 +201,10 @@ export default function StickerForm() {
                 required
             >
                 {categories.map((category) => (
-                    <option key={category} value={category}>
-                        {category}
+                    <option key={category.id} value={category.name}>
+                        {category.name}
                     </option>
                 ))}
-
             </select>
 
             <label className="block font-medium mt-4">Sticker Type</label>
@@ -242,7 +273,7 @@ export default function StickerForm() {
                     />
                 </div>
             </div>
-            {/* Image Inputs Section */}
+
             <label className="block font-medium mt-4">Image URLs</label>
             {formData.images.map((image, index) => (
                 <div key={index} className="flex items-center gap-2 mt-2">
@@ -271,7 +302,6 @@ export default function StickerForm() {
                 + Add More Images
             </button>
 
-            {/* Image Preview Section */}
             <div className="mt-4 grid grid-cols-3 gap-4">
                 {formData.images.map((image, index) =>
                     image.image_url ? (
