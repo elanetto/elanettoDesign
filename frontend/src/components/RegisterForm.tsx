@@ -2,33 +2,24 @@ import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa";
-import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { LOGIN_URL } from "../constants";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { toast } from "react-hot-toast";
+import { REGISTER_URL } from "../constants";
 
-interface User {
-    id: number;
-    username: string;
-    email: string;
-    role: "customer" | "admin";
-    avatar?: string;
-}
 
-interface LoginResponse {
-    token: string;
-    user: User;
-}
-
-export default function LoginForm() {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [error, setError] = useState<string>("");
+export default function RegisterForm() {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [avatar, setAvatar] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const validateEmail = (email: string): boolean => /\S+@\S+\.\S+/.test(email);
 
-    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
 
@@ -38,38 +29,43 @@ export default function LoginForm() {
         }
 
         try {
-            const response = await axios.post<LoginResponse>(`${LOGIN_URL}`, {
+            const response = await axios.post(`${REGISTER_URL}`, {
+                username,
                 email,
                 password,
+                avatar,
+                role: "customer"
             });
-
-            const { token, user } = response.data;
-
-            localStorage.setItem("token", token);
-            localStorage.setItem("user", JSON.stringify(user));
-
-            if (user.role === "admin") {
-                navigate("/admin");
-            } else {
-                navigate("/");
-            }
+        
+            if (response.status === 201) {
+                toast.success("Account created! You can now log in 🎉");
+                navigate("/login");
+            }            
+        
         } catch (err) {
-            const axiosError = err as AxiosError;
-
-            if (axiosError.response?.status === 401) {
-                setError("Invalid email or password.");
-            } else {
-                setError("Something went wrong. Please try again.");
-            }
+            const axiosError = err as AxiosError<{ error?: string }>;
+            console.error("Registration error:", axiosError);
+            setError(axiosError.response?.data?.error || "Something went wrong. Please try again.");
         }
+        
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#D26E63] text-center">
             <div className="bg-white p-8 rounded-t-3xl w-full max-w-md">
-                <h1 className="text-2xl font-bold text-[#D26E63] mb-2">LOGIN</h1>
+                <h1 className="text-2xl font-bold text-[#D26E63] mb-2">SIGN UP</h1>
 
-                <form onSubmit={handleLogin} className="space-y-4 text-left">
+                <form onSubmit={handleRegister} className="space-y-4 text-left">
+                    <div>
+                        <label className="text-sm">Username</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className="w-full border-b-2 border-black focus:outline-none p-1"
+                            required
+                        />
+                    </div>
                     <div>
                         <label className="text-sm">Email</label>
                         <input
@@ -80,7 +76,6 @@ export default function LoginForm() {
                             required
                         />
                     </div>
-
                     <div>
                         <label className="text-sm">Password</label>
                         <div className="relative">
@@ -101,19 +96,27 @@ export default function LoginForm() {
                             </button>
                         </div>
                     </div>
-
+                    <div>
+                        <label className="text-sm">Avatar URL (optional)</label>
+                        <input
+                            type="text"
+                            value={avatar}
+                            onChange={(e) => setAvatar(e.target.value)}
+                            className="w-full border-b-2 border-black focus:outline-none p-1"
+                        />
+                    </div>
                     {error && <p className="text-red-500 text-sm">{error}</p>}
 
                     <button
                         type="submit"
                         className="w-full bg-[#D26E63] text-white rounded-full py-2 font-semibold"
                     >
-                        LOGIN
+                        SIGN UP
                     </button>
                 </form>
 
                 <p className="text-sm mt-4">
-                    Not a member? <Link to="/register" className="text-[#D26E63]">Sign up</Link>
+                    Already a member? <Link to="/login" className="text-[#D26E63]">Login</Link>
                 </p>
 
                 <div className="flex justify-center mt-4 space-x-4 text-xl">
