@@ -115,6 +115,11 @@ export default function StickerForm() {
         try {
             const categoryId = categories.find((cat) => cat.name === formData.category)?.id;
 
+            if (!categoryId) {
+            toast.error("Category not found. Please select a valid category.");
+            return;
+            }
+
             if (productId) {
                 await updateSticker(productId, stickerData);
 
