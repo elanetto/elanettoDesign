@@ -51,7 +51,7 @@ export default function LoginForm() {
             if (user.role === "admin") {
                 navigate("/admin");
             } else {
-                navigate("/");
+                navigate("/account");
             }
         } catch (err) {
             const axiosError = err as AxiosError;

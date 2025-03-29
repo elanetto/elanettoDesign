@@ -2,6 +2,8 @@ import { NavLink } from "react-router-dom";
 import { FaHome, FaShoppingBag, FaHeart, FaUser } from "react-icons/fa";
 
 export default function MobileNavbar() {
+  const user = localStorage.getItem("user");
+
   return (
     <nav className="fixed bottom-0 left-0 w-full bg-white shadow-md border-t flex justify-around py-3">
       <NavLink
@@ -41,7 +43,7 @@ export default function MobileNavbar() {
       </NavLink>
 
       <NavLink
-        to="/profile/exampleUser"
+        to={user ? "/account" : "/login"}
         className={({ isActive }) =>
           `flex flex-col items-center text-sm ${
             isActive ? "text-primary font-semibold" : "text-black"
