@@ -20,6 +20,7 @@ import CategoryDetailsPage from "./routes/CategoryDetailsPage";
 import Layout from "./Layout";
 import AdminLayout from "./routes/AdminPage/AdminLayout";
 import { Toaster } from "react-hot-toast";
+import AccountPage from "./routes/AccountPage";
 
 
 const router = createBrowserRouter([
@@ -78,7 +79,12 @@ const router = createBrowserRouter([
             {
                 path: "register",
                 element: <RegisterPage />,
+            },
+            {
+                path: "account",
+                element: <AccountPage />,
             }
+
         ]
     },
     {

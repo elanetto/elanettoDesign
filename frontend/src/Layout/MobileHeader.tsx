@@ -5,6 +5,7 @@ import {useCartStore} from "../store/CartStore";
 export default function MobileHeader() {
     const {cart} = useCartStore();
     const cartCount = cart.length;
+
     return (
         <header className="flex justify-between items-center p-4 bg-white shadow-md">
             <h1 className="text-lg font-semibold text-primary">ElanettoDesign</h1>
