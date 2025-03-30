@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import logout from "../../utilities/logout"
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState("Profile");
+  const navigate = useNavigate();
   const user = (() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -32,6 +35,12 @@ export default function AccountPage() {
               </div>
             </div>
             <p className="text-sm text-gray-500 mt-2">(Avatar upload functionality coming soon!)</p>
+            <button
+              onClick={() => logout(navigate)}
+              className="mt-6 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Logout
+            </button>
           </div>
         );
       case "Pending Orders":
