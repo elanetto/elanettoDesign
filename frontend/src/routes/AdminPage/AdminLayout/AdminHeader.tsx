@@ -9,8 +9,13 @@ export default function AdminHeader() {
 
   const user = (() => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  })();
+    try {
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+      console.error("Failed to parse user data from localStorage:", error);
+      return null;
+    }
+  })();  
 
   return (
     <header className="flex justify-between items-center bg-white shadow-md px-6 py-4 rounded-xl">
