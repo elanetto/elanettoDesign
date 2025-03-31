@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
+import Address from "./Address.js";
+import User from "./User.js"; // optional, if you want to associate with users later
 
 const Order = sequelize.define("Order", {
     id: {
@@ -10,6 +12,10 @@ const Order = sequelize.define("Order", {
     user_id: {
         type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
+    },
+    address_id: {
+        type: DataTypes.BIGINT.UNSIGNED,
+        allowNull: true,
     },
     total_amount: {
         type: DataTypes.DECIMAL(10, 2).UNSIGNED,
@@ -33,5 +39,11 @@ const Order = sequelize.define("Order", {
     createdAt: "created_at",
     updatedAt: "updated_at",
 });
+
+// Associations
+import OrderItem from "./OrderItem.js";
+Order.hasMany(OrderItem, { foreignKey: "order_id", as: "items" });
+
+Order.belongsTo(Address, { foreignKey: "address_id", as: "address" });
 
 export default Order;

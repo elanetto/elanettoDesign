@@ -12,6 +12,8 @@ import favoriteRoutes from "./routes/favoriteRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import newsletterRoutes from "./routes/newsletterRoutes.js";
+import addressRoutes from "./routes/addressRoutes.js";
+
 
 // Sync the database (this updates the structure automatically)
 sequelize.sync({ alter: true })
@@ -37,6 +39,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/newsletter", newsletterRoutes);
+app.use("/api/addresses", addressRoutes);
 app.get("/", (req, res) => {
     res.send("Welcome to Elanetto's Sticker API");
 });
