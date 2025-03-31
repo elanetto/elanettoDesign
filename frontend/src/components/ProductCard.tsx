@@ -2,6 +2,7 @@ import { Sticker } from "../types/sticker";
 import { CartItem, useCartStore } from "../store/CartStore";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { AddToCart } from "./AddToCart";
+import { Link } from "react-router-dom";
 
 type ProductCardProps = {
   product: Sticker | CartItem;
@@ -18,7 +19,6 @@ export default function ProductCard({
   onDelete,
 }: ProductCardProps) {
   const isCartItem = "quantity" in product;
-
   const { itemIncrement, itemDecrement, removeFromCart } = useCartStore();
 
   const image =
@@ -32,25 +32,51 @@ export default function ProductCard({
 
   return (
     <div className="bg-white shadow-lg rounded-2xl p-4 w-full flex flex-col items-center">
-      <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
-        <img
-          src={image}
-          alt={imageAlt}
-          className="w-32 h-32 object-cover rounded-md"
-        />
-      </div>
-      <div className="text-center mt-4">
-        <h2 className="text-lg font-semibold">{product.title}</h2>
-        <p className="text-secondary-text text-sm">
-          {product.category || "No category"}
-        </p>
-        <p className="text-primary text-xl font-semibold mt-1">
-          NOK {product.discount > 0 ? product.discount : product.price}
-        </p>
-        <p className="text-secondary-text text-sm mt-1">
-          {product.stock_quantity} in stock | {product.sticker_type}
-        </p>
-      </div>
+      {mode === "customer" && !isCartItem ? (
+        <Link to={`/products/${product.id}`} className="w-full">
+          <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
+            <img
+              src={image}
+              alt={imageAlt}
+              className="w-32 h-32 object-cover rounded-md"
+            />
+          </div>
+          <div className="text-center mt-4">
+            <h2 className="text-lg font-semibold">{product.title}</h2>
+            <p className="text-secondary-text text-sm">
+              {product.category || "No category"}
+            </p>
+            <p className="text-primary text-xl font-semibold mt-1">
+              NOK {product.discount > 0 ? product.discount : product.price}
+            </p>
+            <p className="text-secondary-text text-sm mt-1">
+              {product.stock_quantity} in stock | {product.sticker_type}
+            </p>
+          </div>
+        </Link>
+      ) : (
+        <>
+          <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
+            <img
+              src={image}
+              alt={imageAlt}
+              className="w-32 h-32 object-cover rounded-md"
+            />
+          </div>
+          <div className="text-center mt-4">
+            <h2 className="text-lg font-semibold">{product.title}</h2>
+            <p className="text-secondary-text text-sm">
+              {product.category || "No category"}
+            </p>
+            <p className="text-primary text-xl font-semibold mt-1">
+              NOK {product.discount > 0 ? product.discount : product.price}
+            </p>
+            <p className="text-secondary-text text-sm mt-1">
+              {product.stock_quantity} in stock | {product.sticker_type}
+            </p>
+          </div>
+        </>
+      )}
 
       <div className="w-full mt-4 flex flex-col items-center gap-2">
         {mode === "admin" ? (
@@ -88,12 +114,10 @@ export default function ProductCard({
               </button>
             </div>
             <p className="text-sm font-medium text-green-700">
-              Total:{" "}
-              {(
+              Total: {(
                 product.quantity *
                 (product.discount > 0 ? product.discount : product.price)
-              ).toFixed(2)}{" "}
-              kr
+              ).toFixed(2)} kr
             </p>
             <button
               onClick={() => removeFromCart(product.id)}
