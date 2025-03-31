@@ -1,16 +1,17 @@
 import Order from "../models/Order.js";
 import OrderItem from "../models/OrderItem.js";
+import Address from "../models/Address.js";
 
 // Create new order
 export const createOrder = async (req, res) => {
     try {
-        const { user_id, items, total_amount } = req.body;
+        const { user_id, address_id, items, total_amount } = req.body;
 
         if (!items || items.length === 0) {
             return res.status(400).json({ error: "Order must contain at least one item." });
         }
 
-        const order = await Order.create({ user_id, total_amount });
+        const order = await Order.create({ user_id, address_id, total_amount });
 
         const orderItems = items.map((item) => ({
             order_id: order.id,
@@ -32,7 +33,10 @@ export const createOrder = async (req, res) => {
 export const getAllOrders = async (req, res) => {
     try {
         const orders = await Order.findAll({
-            include: [{ model: OrderItem, as: "items" }]
+            include: [
+                { model: OrderItem, as: "items" },
+                { model: Address, as: "address" }
+            ]
         });
         res.json(orders);
     } catch (error) {
@@ -45,7 +49,10 @@ export const getAllOrders = async (req, res) => {
 export const getOrderById = async (req, res) => {
     try {
         const order = await Order.findByPk(req.params.id, {
-            include: [{ model: OrderItem, as: "items" }]
+            include: [
+                { model: OrderItem, as: "items" },
+                { model: Address, as: "address" }
+            ]
         });
 
         if (!order) return res.status(404).json({ error: "Order not found." });
