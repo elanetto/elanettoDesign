@@ -19,6 +19,9 @@ import AllCategoriesPage from "./routes/AllCategoriesPage";
 import CategoryDetailsPage from "./routes/CategoryDetailsPage";
 import Layout from "./Layout";
 import AdminLayout from "./routes/AdminPage/AdminLayout";
+import { Toaster } from "react-hot-toast";
+import AccountPage from "./routes/AccountPage";
+
 
 const router = createBrowserRouter([
     {
@@ -76,7 +79,12 @@ const router = createBrowserRouter([
             {
                 path: "register",
                 element: <RegisterPage />,
+            },
+            {
+                path: "account",
+                element: <AccountPage />,
             }
+
         ]
     },
     {
@@ -102,5 +110,6 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <RouterProvider router={router} />
+        <Toaster position="top-center" reverseOrder={false} />
     </StrictMode>,
 );

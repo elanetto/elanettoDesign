@@ -4,6 +4,8 @@ import {useCartStore} from "../store/CartStore";
 
 export default function Header() {
   const {getTotalItems} = useCartStore();
+  const token = localStorage.getItem("token");
+
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
       <Link to="/" className="flex items-center gap-2">
@@ -64,10 +66,10 @@ export default function Header() {
                     )}
                 </Link>
 
+                <Link to={token ? "/account" : "/login"}>
+                  <FaUser className="primary-text cursor-pointer hover:text-secondary-text" />
+                </Link>
 
-        <Link to="/profile/exampleUser">
-          <FaUser className="primary-text cursor-pointer hover:text-secondary-text" />
-        </Link>
       </div>
     </header>
   );

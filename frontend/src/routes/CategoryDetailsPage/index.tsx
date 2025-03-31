@@ -58,7 +58,7 @@ export default function CategoryDetailsPage() {
       ) : products.length === 0 ? (
         <p className="text-center">No products found in this category 😢</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 px-4 sm:px-6 lg:px-8">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} mode="customer" />
           ))}
