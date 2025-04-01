@@ -21,11 +21,13 @@ export default function ProductCard({
 }: ProductCardProps) {
   const isCartItem = "quantity" in product;
   const { itemIncrement, itemDecrement, removeFromCart } = useCartStore();
-  
+
   const firstImage =
-  "images" in product && Array.isArray(product.images) && product.images.length > 0
-    ? product.images[0]
-    : null;
+    "images" in product &&
+    Array.isArray(product.images) &&
+    product.images.length > 0
+      ? product.images[0]
+      : null;
 
   const image = firstImage?.image_url ?? "https://via.placeholder.com/150";
   const imageAlt = firstImage?.image_alt ?? "No Image Available";
@@ -140,10 +142,14 @@ export default function ProductCard({
             </button>
             <button
               onClick={() => {
-                if (confirm("Are you sure you want to delete this product? This cannot be undone.")) {
+                if (
+                  confirm(
+                    "Are you sure you want to delete this product? This cannot be undone."
+                  )
+                ) {
                   onDelete?.();
                 }
-              }}              
+              }}
               className="flex items-center gap-2 border-2 border-red-400 text-red-500 px-4 py-1 rounded-lg text-sm hover:bg-red-100 transition"
             >
               <FaTrashAlt />
