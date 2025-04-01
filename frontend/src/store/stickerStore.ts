@@ -10,7 +10,7 @@ interface StickerState {
     fetchStickers: () => Promise<void>;
     fetchSpecificSticker: (productId: string) => Promise<void>;
     deleteSticker: (productId: number) => Promise<void>;
-    updateSticker: (productId: string, updatedData: Sticker) => Promise<void>;
+    updateSticker: (productId: string, updatedData: Partial<Sticker>) => Promise<void>;
     setStickers: (stickers: Sticker[]) => void;
 }
 
@@ -56,7 +56,7 @@ export const useStickerStore = create<StickerState>((set) => ({
         }
     },
 
-    updateSticker: async (productId: string, updatedData: Sticker) => {
+    updateSticker: async (productId: string, updatedData: Partial<Sticker>) => {
         try {
             const response = await fetch(`${BASE_URL}/stickers/${productId}`, {
                 method: "PUT",

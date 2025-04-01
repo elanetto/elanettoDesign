@@ -33,7 +33,7 @@ export default function SpecificProductPage() {
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
   if (!product) return null;
 
-  const images = product.images || [];
+  const images = Array.isArray(product.images) ? product.images : [];
   const hasMultipleImages = images.length > 1;
   const image = images[currentImageIndex]?.image_url || "https://via.placeholder.com/300";
   const imageAlt = images[currentImageIndex]?.image_alt || "No Image";

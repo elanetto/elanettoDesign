@@ -1,48 +1,61 @@
-import sequelize from "../config/db.js";
-import { DataTypes } from "sequelize";
+import NewsletterSubscriber from "../models/NewsletterSubscriber.js";
 
-const NewsletterSubscriber = sequelize.define("NewsletterSubscriber", {
-  name: {
-    type: DataTypes.STRING(100),
-    allowNull: true,
-  },
-  email: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-    unique: true,
-  },
-  is_verified: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  subscribed_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  unsubscribed_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
-}, {
-  tableName: "newsletter_subscribers",
-  timestamps: false,
-});
-
-export const subscribe = async (req, res) => {
-  const { name, email } = req.body;
+export const subscribeNewsletter = async (req, res) => {
   try {
-    const [subscriber, created] = await NewsletterSubscriber.findOrCreate({
-      where: { email },
-      defaults: { name },
-    });
+    const { name, email } = req.body;
 
-    if (!created) {
-      return res.status(409).json({ message: "Email is already subscribed." });
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
     }
 
-    res.status(201).json({ message: "Successfully subscribed!" });
-  } catch (err) {
-    console.error("Error subscribing:", err);
-    res.status(500).json({ error: "Internal server error." });
+    const existing = await NewsletterSubscriber.findOne({ where: { email } });
+
+    if (existing) {
+      await existing.update({
+        name: name || existing.name,
+        is_verified: false, // Reset verification if re-subscribing
+        subscribed_at: new Date(), // Optional: update the timestamp
+        unsubscribed_at: null, // Optional: reset unsubscribed status
+      });
+
+      return res.status(200).json({
+        message: "Subscription updated. Please verify your email.",
+        subscriber: existing,
+      });
+    }
+
+    const newSubscriber = await NewsletterSubscriber.create({
+      name,
+      email,
+      is_verified: false,
+    });
+
+    return res.status(201).json({
+      message: "Subscribed successfully! Please verify your email.",
+      subscriber: newSubscriber,
+    });
+
+  } catch (error) {
+    console.error("🧨 Newsletter subscription error:", error);
+    res.status(500).json({ error: "Failed to subscribe to the newsletter." });
+  }
+};
+
+export const unsubscribeNewsletter = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const subscriber = await NewsletterSubscriber.findOne({ where: { email } });
+
+    if (!subscriber) {
+      return res.status(404).json({ error: "Subscriber not found." });
+    }
+
+    await subscriber.update({ unsubscribed_at: new Date() });
+
+    res.json({ message: "You’ve been unsubscribed. We’ll miss you 💔" });
+
+  } catch (error) {
+    console.error("Unsubscribe error:", error);
+    res.status(500).json({ error: "Failed to unsubscribe." });
   }
 };

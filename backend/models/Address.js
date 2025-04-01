@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
-import User from "./User.js";
 
 const Address = sequelize.define("Address", {
   id: {
@@ -47,7 +46,5 @@ const Address = sequelize.define("Address", {
   tableName: "addresses",
   timestamps: false,
 });
-
-Address.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
 export default Address;

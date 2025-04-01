@@ -1,5 +1,6 @@
 import {DataTypes} from "sequelize";
 import sequelize from "../config/db.js";
+
 const Sticker = sequelize.define("Sticker", {
     id: {
         type: DataTypes.BIGINT.UNSIGNED,

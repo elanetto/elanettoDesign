@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
-import Category from "./Category.js";
 
 const ProductCategory = sequelize.define("ProductCategory", {
   product_id: {
@@ -13,7 +12,7 @@ const ProductCategory = sequelize.define("ProductCategory", {
     allowNull: false,
     primaryKey: true,
     references: {
-      model: Category,
+      model: "categories", // ✅ use table name as string to avoid circular imports
       key: "id",
     },
     onDelete: "CASCADE",
@@ -29,13 +28,12 @@ const ProductCategory = sequelize.define("ProductCategory", {
   indexes: [
     {
       unique: true,
-      fields: ["product_id", "category_id", "product_type"]
-    }
+      fields: ["product_id", "category_id", "product_type"],
+    },
   ],
-  // 👇 This prevents Sequelize from adding a default `id` primary key
   createdAt: false,
   updatedAt: false,
-  freezeTableName: true
+  freezeTableName: true,
 });
 
 export default ProductCategory;
