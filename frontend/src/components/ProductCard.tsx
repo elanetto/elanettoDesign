@@ -21,14 +21,13 @@ export default function ProductCard({
   const isCartItem = "quantity" in product;
   const { itemIncrement, itemDecrement, removeFromCart } = useCartStore();
 
+  const stickerProduct = !("quantity" in product) ? (product as Sticker) : null;
+
   const image =
-    product.images?.length > 0
-      ? product.images[0].image_url
-      : "https://via.placeholder.com/150";
+  stickerProduct?.images?.[0]?.image_url ?? "https://via.placeholder.com/150";
+
   const imageAlt =
-    product.images?.length > 0
-      ? product.images[0].image_alt
-      : "No Image Available";
+  stickerProduct?.images?.[0]?.image_alt ?? "No Image Available";
 
   return (
     <div className="bg-white shadow-lg rounded-2xl p-4 w-full flex flex-col items-center">

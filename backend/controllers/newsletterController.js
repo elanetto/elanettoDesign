@@ -1,32 +1,4 @@
-import sequelize from "../config/db.js";
-import { DataTypes } from "sequelize";
-
-const NewsletterSubscriber = sequelize.define("NewsletterSubscriber", {
-  name: {
-    type: DataTypes.STRING(100),
-    allowNull: true,
-  },
-  email: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-    unique: true,
-  },
-  is_verified: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  subscribed_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  unsubscribed_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
-}, {
-  tableName: "newsletter_subscribers",
-  timestamps: false,
-});
+import NewsletterSubscriber from "../models/NewsletterSubscriber.js";
 
 export const subscribe = async (req, res) => {
   const { name, email } = req.body;
