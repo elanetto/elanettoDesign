@@ -88,7 +88,11 @@ export default function ProductCard({
               Edit
             </button>
             <button
-              onClick={() => onDelete?.()}
+              onClick={() => {
+                if (confirm("Are you sure you want to delete this product? This cannot be undone.")) {
+                  onDelete?.();
+                }
+              }}              
               className="flex items-center gap-2 border-2 border-red-400 text-red-500 px-4 py-1 rounded-lg text-sm hover:bg-red-100 transition"
             >
               <FaTrashAlt />

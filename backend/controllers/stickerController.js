@@ -159,14 +159,24 @@ export const updateSticker = async (req, res) => {
 };
 
 export const deleteSticker = async (req, res) => {
-  try {
-    const sticker = await Sticker.findByPk(req.params.id);
-    if (!sticker) return res.status(404).json({ error: "Sticker not found" });
-
-    await sticker.destroy();
-    res.json({ message: "Sticker deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting sticker:", error);
-    res.status(500).json({ error: "Failed to delete sticker." });
-  }
-};
+    try {
+      const sticker = await Sticker.findByPk(req.params.id);
+      if (!sticker) return res.status(404).json({ error: "Sticker not found" });
+  
+      // First delete from product_categories
+      await ProductCategory.destroy({
+        where: {
+          product_id: sticker.id,
+          product_type: "sticker",
+        },
+      });
+  
+      // Then delete the sticker itself
+      await sticker.destroy();
+      res.json({ message: "Sticker deleted successfully" });
+  
+    } catch (error) {
+      console.error("Error deleting sticker:", error);
+      res.status(500).json({ error: "Failed to delete sticker." });
+    }
+  };
