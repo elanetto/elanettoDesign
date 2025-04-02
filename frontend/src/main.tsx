@@ -33,13 +33,13 @@ const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: "category",
+        path: "category/:product_type",
         element: <AllCategoriesPage />,
       },
       {
-        path: "category/:name",
+        path: "category/:categoryId/:product_type",
         element: <CategoryDetailsPage />,
-      },
+      },         
       {
         path: "products",
         element: <ProductsPage />,
