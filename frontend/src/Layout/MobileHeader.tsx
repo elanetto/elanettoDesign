@@ -1,17 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { FaSearch, FaShoppingCart, FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useCartStore } from "../store/CartStore";
+import { useFavouritesStore } from "../store/FavouritesStore";
 import { MobileSearch } from "../components/MobileSearch";
 
 export default function MobileHeader() {
-  const { cart } = useCartStore();
-  const cartCount = cart.length;
+  const { getTotalItems } = useCartStore();
+  const cartCount = getTotalItems();
+
+  const favouritesCount = useFavouritesStore(
+    (state) => state.favourites.length
+  );
 
   const [showSearch, setShowSearch] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  // Close search input when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -40,6 +44,15 @@ export default function MobileHeader() {
           <FaSearch size={18} />
         </button>
 
+        <Link to="/favourites" className="relative">
+          <FaHeart size={20} className="text-black hover:text-secondary-text" />
+          {favouritesCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+              {favouritesCount}
+            </span>
+          )}
+        </Link>
+
         <div className="relative">
           <Link className="text-black hover:text-secondary-text" to="/cart">
             <FaShoppingCart size={20} />
@@ -53,9 +66,11 @@ export default function MobileHeader() {
       </div>
 
       {showSearch && (
-        <div className="absolute top-full left-0 right-0 p-4 bg-white shadow z-10" ref={searchRef}>
+        <div
+          className="absolute top-full left-0 right-0 p-4 bg-white shadow z-10"
+          ref={searchRef}
+        >
           <MobileSearch setShowSearch={setShowSearch} />
-
         </div>
       )}
     </header>

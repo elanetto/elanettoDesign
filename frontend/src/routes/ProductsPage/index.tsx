@@ -23,7 +23,7 @@ export default function ShopPage() {
       <div className="flex w-full justify-center m-4">
         <Search setResults={setSearchResults} />
       </div>
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center pb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6 mx-auto items-start">
           {searchResults.length > 0 ? (
             searchResults.map((sticker) => (
