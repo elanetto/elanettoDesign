@@ -27,63 +27,57 @@ export const createCategory = async (req, res) => {
 
 export const assignCategoryToProduct = async (req, res) => {
     try {
-        const { product_id, product_type, category_id } = req.body;
-
-        const existing = await ProductCategory.findOne({
-            where: { product_id, product_type, category_id }
-        });
-
-        if (existing) {
-            return res.status(400).json({ error: "Category already assigned to product." });
-        }
-
-        const assignment = await ProductCategory.create({
-            product_id,
-            product_type,
-            category_id,
-        });
-
-        res.status(201).json({ message: "Category assigned to product", assignment });
+      const { product_id, product_type, category_id } = req.body;
+  
+      // Remove all existing categories for this product and type
+      await ProductCategory.destroy({
+        where: { product_id, product_type }
+      });
+  
+      // Assign the new one
+      const assignment = await ProductCategory.create({
+        product_id,
+        product_type,
+        category_id,
+      });
+  
+      res.status(201).json({ message: "Category assigned to product", assignment });
     } catch (error) {
-        console.error("Error assigning category:", error);
-        res.status(500).json({ error: "Failed to assign category." });
+      console.error("Error assigning category:", error);
+      res.status(500).json({ error: "Failed to assign category." });
     }
 };
+  
 
 export const getProductsByCategory = async (req, res) => {
     try {
-        const { categoryName, product_type } = req.params;
-
-        // Check valid product_type
-        if (!["sticker", "bookmark", "bundle"].includes(product_type)) {
-            return res.status(400).json({ error: `Invalid product type '${product_type}'` });
-        }
-
-        // Find the category
-        const category = await Category.findOne({ where: { name: categoryName } });
-        if (!category) {
-            return res.status(404).json({ error: `Category '${categoryName}' not found` });
-        }
-
-        // Find assigned products
-        const assignments = await ProductCategory.findAll({
-            where: {
-                category_id: category.id,
-                product_type,
-            },
-        });
-
-        // Even if it's empty, that's okay!
-        const productIds = assignments.map((a) => a.product_id);
-
-        return res.json({
-            product_type,
-            category: categoryName,
-            product_ids: productIds,
-        });
+      const { categoryId, product_type } = req.params;
+  
+      if (!['sticker', 'bookmark', 'bundle'].includes(product_type)) {
+        return res.status(400).json({ error: `Invalid product type '${product_type}'` });
+      }
+  
+      const category = await Category.findByPk(categoryId);
+      if (!category || !category.is_active) {
+        return res.status(404).json({ error: `Category ID '${categoryId}' not found` });
+      }
+  
+      const assignments = await ProductCategory.findAll({
+        where: {
+          category_id: categoryId,
+          product_type,
+        },
+      });
+  
+      const productIds = assignments.map((a) => a.product_id);
+  
+      res.json({
+        product_type,
+        category: category.name,
+        product_ids: productIds,
+      });
     } catch (error) {
-        console.error("Error in getProductsByCategory:", error);
-        return res.status(500).json({ error: "Failed to fetch products by category." });
+      console.error("Error in getProductsByCategory:", error);
+      res.status(500).json({ error: "Failed to fetch products by category." });
     }
-};
-
+  };
