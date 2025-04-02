@@ -5,7 +5,7 @@ export default function MobileNavbar() {
   const user = localStorage.getItem("user");
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white shadow-md border-t flex justify-around py-3">
+    <nav className="sticky bottom-0 left-0 w-full bg-white shadow-md border-t flex z-[9999] justify-around py-3">
       <NavLink
         to="/"
         className={({ isActive }) =>

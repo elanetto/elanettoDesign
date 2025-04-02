@@ -1,9 +1,13 @@
-import {NavLink, Link} from "react-router-dom";
-import {FaSearch, FaShoppingCart, FaUser, FaHeart} from "react-icons/fa";
-import {useCartStore} from "../store/CartStore";
+import { NavLink, Link } from "react-router-dom";
+import { FaSearch, FaShoppingCart, FaUser, FaHeart } from "react-icons/fa";
+import { useCartStore } from "../store/CartStore";
+import { useFavouritesStore } from "../store/FavouritesStore";
 
 export default function Header() {
-  const {getTotalItems} = useCartStore();
+  const { getTotalItems } = useCartStore();
+  const favouritesCount = useFavouritesStore(
+    (state) => state.favourites.length
+  );
   const token = localStorage.getItem("token");
 
   return (
@@ -43,33 +47,30 @@ export default function Header() {
         </ul>
       </nav>
 
-      <div className="flex items-center gap-4 ">
+      <div className="flex items-center gap-4">
         <FaSearch className="primary-text cursor-pointer hover:text-secondary-text" />
 
+        <Link to="/favourites" className="relative">
+          <FaHeart className="primary-text cursor-pointer hover:text-secondary-text" />
+          {favouritesCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+              {favouritesCount}
+            </span>
+          )}
+        </Link>
 
-                <Link to="/favourites" className="relative">
-                    <FaHeart className="primary-text cursor-pointer hover:text-secondary-text" />
-                    <span
-                        className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                        5
-                    </span>
-                </Link>
+        <Link to="/cart" className="relative">
+          <FaShoppingCart className="primary-text cursor-pointer hover:text-secondary-text" />
+          {getTotalItems() > 0 && (
+            <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+              {getTotalItems()}
+            </span>
+          )}
+        </Link>
 
-                <Link to="/cart" className="relative">
-                    <FaShoppingCart className="primary-text cursor-pointer hover:text-secondary-text" />
-                    {getTotalItems() > 0 && (
-                        <span
-                            className="absolute -top-2 -right-2 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
-                        >
-                            {getTotalItems()}
-                        </span>
-                    )}
-                </Link>
-
-                <Link to={token ? "/account" : "/login"}>
-                  <FaUser className="primary-text cursor-pointer hover:text-secondary-text" />
-                </Link>
-
+        <Link to={token ? "/account" : "/login"}>
+          <FaUser className="primary-text cursor-pointer hover:text-secondary-text" />
+        </Link>
       </div>
     </header>
   );
