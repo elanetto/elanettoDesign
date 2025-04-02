@@ -4,6 +4,8 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { AddToCart } from "./AddToCart";
 import { Link } from "react-router-dom";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useFavouritesStore } from "../store/FavouritesStore";
 
 type ProductCardProps = {
   product: Sticker | CartItem;
@@ -11,6 +13,7 @@ type ProductCardProps = {
   onEdit?: () => void;
   onDelete?: () => void;
   onAddToCart?: () => void;
+  onToggleFavourite?: () => void;
 };
 
 export default function ProductCard({
@@ -18,6 +21,7 @@ export default function ProductCard({
   mode,
   onEdit,
   onDelete,
+  onToggleFavourite,
 }: ProductCardProps) {
   const isCartItem = "quantity" in product;
   const { itemIncrement, itemDecrement, removeFromCart } = useCartStore();
@@ -34,6 +38,9 @@ export default function ProductCard({
 
   const price = product.discount > 0 ? product.discount : product.price;
   const total = isCartItem ? product.quantity * price : price;
+
+  const { toggleFavourite, isFavourite } = useFavouritesStore();
+  const hearted = isFavourite(product.id);
 
   // this is what the cards look like in cart ! scroll down for the "normal" cards
   if (mode === "checkout" && isCartItem) {
@@ -83,29 +90,43 @@ export default function ProductCard({
 
   // this is the default layout for the "normal" cards (not checkout)
   return (
-    <div className="bg-white shadow-lg rounded-2xl p-4 w-full flex flex-col items-center">
+    <div className="bg-white shadow-lg rounded-2xl p-4 w-full flex flex-col items-center  relative">
       {mode === "customer" && !isCartItem ? (
-        <Link to={`/products/${product.id}`} className="w-full">
-          <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
-            <img
-              src={image}
-              alt={imageAlt}
-              className="w-32 h-32 object-cover rounded-md"
-            />
-          </div>
-          <div className="text-center mt-4">
-            <h2 className="text-lg font-semibold">{product.title}</h2>
-            <p className="text-secondary-text text-sm">
-              {product.category || "No category"}
-            </p>
-            <p className="text-primary text-xl font-semibold mt-1">
-              NOK {price}
-            </p>
-            <p className="text-secondary-text text-sm mt-1">
-              {product.stock_quantity} in stock | {product.sticker_type}
-            </p>
-          </div>
-        </Link>
+        <>
+          <Link to={`/products/${product.id}`} className="w-full">
+            <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
+              <img
+                src={image}
+                alt={imageAlt}
+                className="w-32 h-32 object-cover rounded-md"
+              />
+            </div>
+            <div className="text-center mt-4">
+              <h2 className="text-lg font-semibold">{product.title}</h2>
+              <p className="text-secondary-text text-sm">
+                {product.category || "No category"}
+              </p>
+              <p className="text-primary text-xl font-semibold mt-1">
+                NOK {price}
+              </p>
+              <p className="text-secondary-text text-sm mt-1">
+                {product.stock_quantity} in stock | {product.sticker_type}
+              </p>
+            </div>
+          </Link>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleFavourite
+                ? onToggleFavourite()
+                : toggleFavourite(product);
+            }}
+            className="absolute top-6 right-7 text-lg text-primary z-10"
+          >
+            {hearted ? <FaHeart /> : <FaRegHeart />}
+          </button>
+        </>
       ) : (
         <>
           <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
