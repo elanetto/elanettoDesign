@@ -5,6 +5,8 @@ import { BASE_URL } from "../../constants";
 import { Sticker } from "../../types/sticker";
 import { AddToCart } from "../../components/AddToCart";
 import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
+import { useFavouritesStore } from "../../store/FavouritesStore";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 export default function SpecificProductPage() {
   const { productId } = useParams();
@@ -13,6 +15,8 @@ export default function SpecificProductPage() {
   const [isZoomed, setIsZoomed] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const { isFavourite, toggleFavourite } = useFavouritesStore();
+  const hearted = product ? isFavourite(product.id) : false;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -35,7 +39,8 @@ export default function SpecificProductPage() {
 
   const images = Array.isArray(product.images) ? product.images : [];
   const hasMultipleImages = images.length > 1;
-  const image = images[currentImageIndex]?.image_url || "https://via.placeholder.com/300";
+  const image =
+    images[currentImageIndex]?.image_url || "https://via.placeholder.com/300";
   const imageAlt = images[currentImageIndex]?.image_alt || "No Image";
 
   const handlePrev = () => {
@@ -77,12 +82,20 @@ export default function SpecificProductPage() {
         </div>
 
         {/* Product Info Section */}
-        <div className="flex-1 space-y-4 self-center">
+        <div className="flex-1 space-y-4 self-center relative">
+          <button
+            onClick={() => toggleFavourite(product)}
+            className="absolute top-0 right-0 text-2xl text-primary"
+          >
+            {hearted ? <FaHeart /> : <FaRegHeart />}
+          </button>
           <h1 className="text-2xl font-bold text-primary">{product.title}</h1>
           <p className="text-gray-600">{product.description}</p>
           <div className="text-sm text-gray-500">
             <p>Category: {product.category || "N/A"}</p>
-            <p>Size: {product.width} cm x {product.height} cm</p>
+            <p>
+              Size: {product.width} cm x {product.height} cm
+            </p>
             <p>Type: {product.sticker_type}</p>
             <p>Stock: {product.stock_quantity}</p>
           </div>
@@ -112,14 +125,19 @@ export default function SpecificProductPage() {
 
       {/* Extra Info Section */}
       <div className="mt-10 text-sm text-gray-700 leading-relaxed bg-pink-50 p-4 rounded-xl shadow">
-        <h2 className="text-lg font-semibold text-primary mb-2">Handmade with Love</h2>
+        <h2 className="text-lg font-semibold text-primary mb-2">
+          Handmade with Love
+        </h2>
         <p>
-          All products are illustrated by Anette using Procreate on her iPad. After illustration,
-          each item is carefully printed using an Epson printer for vivid, long-lasting colors, and then
-          cut using a Silhouette Cameo 4 cutting machine to ensure precision.
+          All products are illustrated by Anette using Procreate on her iPad.
+          After illustration, each item is carefully printed using an Epson
+          printer for vivid, long-lasting colors, and then cut using a
+          Silhouette Cameo 4 cutting machine to ensure precision.
         </p>
-        <p className="mt-2">Please note that colors may vary slightly from what you see on screen due to monitor settings,
-          and the final product may differ slightly from the preview.
+        <p className="mt-2">
+          Please note that colors may vary slightly from what you see on screen
+          due to monitor settings, and the final product may differ slightly
+          from the preview.
         </p>
       </div>
     </div>

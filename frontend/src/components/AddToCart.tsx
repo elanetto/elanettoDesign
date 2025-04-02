@@ -1,24 +1,18 @@
 import { Sticker } from "../types/sticker";
 import { useCartStore } from "../store/CartStore";
 
-
 interface AddToCartProps {
   product: Sticker;
 }
 
 export function AddToCart({ product }: AddToCartProps) {
-    const {
-        addToCart,
-        removeFromCart,
-        itemIncrement,
-        itemDecrement,
-        cart,
-    } = useCartStore();
+  const { addToCart, removeFromCart, itemIncrement, itemDecrement, cart } =
+    useCartStore();
 
-    const cartItem = cart.find((item) => item.id === product.id);
-    const isInCart = !!cartItem;
+  const cartItem = cart.find((item) => item.id === product.id);
+  const isInCart = !!cartItem;
 
-    return (
+  return (
     <div className="flex items-center gap-2">
       {!isInCart ? (
         <button
@@ -36,9 +30,7 @@ export function AddToCart({ product }: AddToCartProps) {
             -
           </button>
 
-          <span className="text-lg font-semibold">
-            {cartItem.quantity}
-          </span>
+          <span className="text-lg font-semibold">{cartItem.quantity}</span>
 
           <button
             onClick={() => itemIncrement(product.id)}
@@ -47,9 +39,7 @@ export function AddToCart({ product }: AddToCartProps) {
             +
           </button>
 
-          <button onClick={() => removeFromCart(product.id)}>
-            remove
-          </button>
+          <button onClick={() => removeFromCart(product.id)}>remove</button>
         </div>
       )}
     </div>
