@@ -94,11 +94,11 @@ export default function ProductCard({
       {mode === "customer" && !isCartItem ? (
         <>
           <Link to={`/products/${product.id}`} className="w-full">
-            <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
+            <div className="bg-secondary rounded-xl p-2 w-full flex justify-center">
               <img
                 src={image}
                 alt={imageAlt}
-                className="w-32 h-32 object-cover rounded-md"
+                className="w-[190px] h-[190px] object-cover rounded-md"
               />
             </div>
             <div className="text-center mt-4">
