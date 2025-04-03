@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import OrderSummary from "../../components/OrderSummary";
 
-export default function CheckoutPage() {
+export default function CartPage() {
   const { cart, getTotalPrice } = useCartStore();
 
   const shipping = 31;
