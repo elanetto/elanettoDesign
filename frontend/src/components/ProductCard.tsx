@@ -60,14 +60,14 @@ export default function ProductCard({
           <div className="flex items-center gap-2">
             <button
               onClick={() => itemDecrement(product.id)}
-              className="px-3 py-1 bg-white text-gray-800 rounded-lg hover:bg-gray-100 border shadow-sm flex items-center"
+              className="px-2 py-0.5 w-7 bg-white text-gray-800 rounded-lg hover:bg-gray-100 border shadow-sm flex justify-center items-center"
             >
               -
             </button>
             <span className="text-lg font-semibold">{product.quantity}</span>
             <button
               onClick={() => itemIncrement(product.id)}
-              className="px-3 py-1 bg-white text-gray-800 rounded-lg hover:bg-gray-100 border shadow-sm flex items-center"
+              className="px-2 py-0.5 w-7 bg-white text-gray-800 rounded-lg hover:bg-gray-100 border shadow-sm flex justify-center items-center"
             >
               +
             </button>
@@ -116,14 +116,13 @@ export default function ProductCard({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-            
               if (onToggleFavourite) {
                 onToggleFavourite();
               } else {
                 toggleFavourite(product);
               }
             }}            
-            className="absolute top-6 right-7 text-lg text-primary z-10"
+            className="absolute top-6 right-7 text-xl text-primary z-10"
           >
             {hearted ? <FaHeart /> : <FaRegHeart />}
           </button>
