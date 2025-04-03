@@ -7,8 +7,8 @@ import OrderSummary from "../../components/OrderSummary";
 export default function CheckoutPage() {
   const { cart, getTotalPrice } = useCartStore();
 
-  const shipping = 4.99;
-  const tax = 2.5;
+  const shipping = 31;
+  const tax = 5;
 
   const subtotal = getTotalPrice();
   const total = (subtotal + shipping + tax).toFixed(2);
@@ -38,14 +38,17 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              <OrderSummary
-                subtotal={subtotal}
-                shipping={shipping}
-                tax={tax}
-                savings={savings}
-                total={total}
-              />
-            </div>
+              <div className="w-full lg:w-1/3">
+                <OrderSummary
+                  subtotal={subtotal}
+                  shipping={shipping}
+                  tax={tax}
+                  savings={savings}
+                  total={total}
+                />
+              </div>
+            </div> 
+
 
             <div className="flex justify-between mt-6">
               <Link
