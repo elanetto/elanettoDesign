@@ -42,7 +42,6 @@ export default function ProductCard({
   const { toggleFavourite, isFavourite } = useFavouritesStore();
   const hearted = isFavourite(product.id);
 
-  // this is what the cards look like in cart ! scroll down for the "normal" cards
   if (mode === "checkout" && isCartItem) {
     return (
       <div className="flex sm:flex-row items-center justify-between gap-4 border-b p-4 bg-white rounded-lg shadow-sm w-full">
@@ -88,17 +87,16 @@ export default function ProductCard({
     );
   }
 
-  // this is the default layout for the "normal" cards (not checkout)
   return (
-    <div className="bg-white shadow-lg rounded-2xl p-4 w-full flex flex-col items-center  relative">
+    <div className="group bg-white shadow-lg rounded-2xl p-4 w-full flex flex-col items-center relative overflow-hidden transition duration-300 transform hover:-translate-y-1 hover:shadow-xl">
       {mode === "customer" && !isCartItem ? (
         <>
           <Link to={`/products/${product.id}`} className="w-full">
-            <div className="bg-secondary rounded-xl p-2 w-full flex justify-center">
+            <div className="bg-secondary rounded-xl p-2 w-full flex justify-center overflow-hidden">
               <img
                 src={image}
                 alt={imageAlt}
-                className="w-[190px] h-[190px] object-cover rounded-md"
+                className="w-[190px] h-[190px] object-cover rounded-md group-hover:scale-105 transition duration-300"
               />
             </div>
             <div className="text-center mt-4">
@@ -118,10 +116,13 @@ export default function ProductCard({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              onToggleFavourite
-                ? onToggleFavourite()
-                : toggleFavourite(product);
-            }}
+            
+              if (onToggleFavourite) {
+                onToggleFavourite();
+              } else {
+                toggleFavourite(product);
+              }
+            }}            
             className="absolute top-6 right-7 text-lg text-primary z-10"
           >
             {hearted ? <FaHeart /> : <FaRegHeart />}
@@ -129,11 +130,11 @@ export default function ProductCard({
         </>
       ) : (
         <>
-          <div className="bg-secondary rounded-xl p-4 w-full flex justify-center">
+          <div className="bg-secondary rounded-xl p-4 w-full flex justify-center overflow-hidden">
             <img
               src={image}
               alt={imageAlt}
-              className="w-32 h-32 object-cover rounded-md"
+              className="w-32 h-32 object-cover rounded-md group-hover:scale-105 transition duration-300"
             />
           </div>
           <div className="text-center mt-4">
