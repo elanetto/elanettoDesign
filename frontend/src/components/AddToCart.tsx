@@ -16,7 +16,7 @@ export function AddToCart({ product }: AddToCartProps) {
     <div className="flex items-center gap-2">
       {!isInCart ? (
         <button
-          className="bg-primary px-4 py-2 text-white rounded-lg"
+          className="bg-primary hover:bg-primary-hover px-4 py-2 text-white rounded-lg"
           onClick={() => addToCart(product)}
         >
           Add to cart

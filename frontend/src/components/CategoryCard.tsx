@@ -7,7 +7,12 @@ interface CategoryCardProps {
   product_type: string; // dynamic type: sticker, bookmark, etc
 }
 
-export default function CategoryCard({ id, name, image, product_type }: CategoryCardProps) {
+export default function CategoryCard({
+  id,
+  name,
+  image,
+  product_type,
+}: CategoryCardProps) {
   const fallbackImage = "/category_default.png";
 
   return (
