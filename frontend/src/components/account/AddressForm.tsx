@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ADDRESS_URL } from "../../constants";
 import { Address } from "../../types/Address";
 import { toast } from "react-hot-toast";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   onSuccess: () => void;
   editingAddress?: Address | null;
   onCancelEdit?: () => void;
+  setExternalAddress?: (address: Address | null) => void;
 }
 
-export default function AddressForm({ onSuccess, editingAddress, onCancelEdit }: Props) {
+export default function AddressForm({ onSuccess, editingAddress, onCancelEdit, setExternalAddress }: Props) {
   const [formData, setFormData] = useState<Address>({
     full_name: "",
     street_address: "",
@@ -21,8 +23,10 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit }:
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
   const token = localStorage.getItem("token");
+
+  const location = useLocation();
+  const isCheckoutPage = location.pathname.includes("/checkout");
 
   useEffect(() => {
     if (editingAddress) {
@@ -38,7 +42,7 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit }:
     }));
   };
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors: { [key: string]: string } = {};
 
     if (
@@ -76,7 +80,19 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit }:
     }
 
     return newErrors;
-  };
+  }, [formData]);
+
+  useEffect(() => {
+    if (isCheckoutPage && setExternalAddress) {
+      const validationErrors = validateForm();
+      const isValid = Object.keys(validationErrors).length === 0;
+      if (isValid) {
+        setExternalAddress(formData);
+      } else {
+        setExternalAddress(null);
+      }
+    }
+  }, [formData, isCheckoutPage, setExternalAddress, validateForm]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,6 +102,14 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit }:
       return;
     }
     setErrors({});
+
+    if (!token) {
+      if (setExternalAddress) {
+        setExternalAddress(formData);
+      }
+      onSuccess();
+      return;
+    }
 
     try {
       const method = editingAddress ? "PUT" : "POST";
@@ -103,7 +127,6 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit }:
       if (!response.ok) throw new Error("Failed to save address");
 
       toast.success(editingAddress ? "Address updated!" : "Address saved!");
-
       onSuccess();
 
       setFormData({
@@ -116,6 +139,7 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit }:
         is_default: false,
       });
 
+      if (setExternalAddress) setExternalAddress(formData);
       if (onCancelEdit) onCancelEdit();
     } catch (error) {
       console.error("Error submitting address:", error);
@@ -240,23 +264,25 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit }:
         </p>
       )}
 
-      <div className="flex gap-2">
-        <button
-          type="submit"
-          className="bg-red-500 text-white px-4 py-2 rounded"
-        >
-          {editingAddress ? "Update" : "Save"}
-        </button>
-        {editingAddress && (
+      {!isCheckoutPage && (
+        <div className="flex gap-2">
           <button
-            type="button"
-            onClick={onCancelEdit}
-            className="text-gray-500 underline"
+            type="submit"
+            className="bg-red-500 text-white px-4 py-2 rounded"
           >
-            Cancel
+            {editingAddress ? "Update" : "Save"}
           </button>
-        )}
-      </div>
+          {editingAddress && (
+            <button
+              type="button"
+              onClick={onCancelEdit}
+              className="text-gray-500 underline"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+      )}
     </form>
   );
 }

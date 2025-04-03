@@ -13,7 +13,10 @@ export default function CheckoutPage() {
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [errors, setErrors] = useState<{ address?: string; payment?: string }>({});
+  const [manualAddress, setManualAddress] = useState<Address | null>(null);
   const navigate = useNavigate();
+
+  const [orderConfirmed, setOrderConfirmed] = useState(false);
 
   const shipping = 31;
   const tax = 5;
@@ -38,28 +41,50 @@ export default function CheckoutPage() {
     fetchAddresses();
   }, [token]);
 
+  useEffect(() => {
+    if (orderConfirmed && cart.length === 0) {
+      navigate("/checkout-success");
+
+    }
+  }, [orderConfirmed, cart.length, navigate]);  
+
+  const validateManualAddress = (address: Address | null): boolean => {
+    if (!address) return false;
+    return (
+      /^([A-Za-zÆØÅæøå]+(?:-[A-Za-zÆØÅæøå]+)?)(\s+([A-Za-zÆØÅæøå]+(?:-[A-Za-zÆØÅæøå]+)?))+$/u.test(
+        address.full_name.trim()
+      ) &&
+      /^[A-Za-zÆØÅæøå\s]{2,}\s+\d+/.test(address.street_address.trim()) &&
+      address.city.trim().length >= 2 &&
+      /^[0-9]{4,}$/.test(address.postal_code) &&
+      address.country.trim().length >= 2
+    );
+  };
+
   const handlePlaceOrder = () => {
     const newErrors: { address?: string; payment?: string } = {};
-
-    const addressIsMissing = !token && !showAddressForm;
-    const addressIsNotSelected = token && addresses.length > 0 && !selectedAddressId;
-
-    if (addressIsMissing || addressIsNotSelected) {
+  
+    const addressIsMissing =
+      (!token && (!manualAddress || !validateManualAddress(manualAddress))) ||
+      (token && addresses.length > 0 && !selectedAddressId);
+  
+    if (addressIsMissing) {
       newErrors.address = "Please fill in or select an address before proceeding.";
     }
-
+  
     if (!paymentMethod) {
       newErrors.payment = "Please select a payment method.";
     }
-
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
+  
     clearCart();
-    navigate("/checkout/success");
+    setOrderConfirmed(true); // ✅ trigger redirect after cart is cleared
   };
+  
 
   const savings = cart.reduce((acc, item) => {
     if (item.discount && item.discount > 0) {
@@ -113,8 +138,8 @@ export default function CheckoutPage() {
               <AddressForm
                 onSuccess={() => {
                   setShowAddressForm(false);
-                  window.location.reload();
                 }}
+                setExternalAddress={setManualAddress}
               />
               {!token && (
                 <p className="text-sm text-gray-600 mt-2">

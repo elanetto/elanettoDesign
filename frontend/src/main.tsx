@@ -53,15 +53,13 @@ const router = createBrowserRouter([
         element: <CartPage />,
       },
       {
-        path: "checkout",
+        path: "/checkout",
         element: <CheckoutPage />,
-        children: [
-          {
-            path: "success",
-            element: <CheckoutSuccessPage />,
-          },
-        ],
       },
+      {
+        path: "/checkout-success",
+        element: <CheckoutSuccessPage />,
+      },      
       {
         path: "favourites",
         element: <FavouritesPage />,
