@@ -22,6 +22,7 @@ import AdminLayout from "./routes/AdminPage/AdminLayout";
 import { Toaster } from "react-hot-toast";
 import AccountPage from "./routes/AccountPage";
 import FavouritesPage from "./routes/FavouritesPage";
+import ShopPage from "./routes/ShopPage";
 
 const router = createBrowserRouter([
   {
@@ -39,10 +40,10 @@ const router = createBrowserRouter([
       {
         path: "category/:categoryId/:product_type",
         element: <CategoryDetailsPage />,
-      },         
+      },
       {
         path: "products",
-        element: <ProductsPage />,
+        element: <ShopPage />,
       },
       {
         path: "products/:productId",
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
       {
         path: "/checkout-success",
         element: <CheckoutSuccessPage />,
-      },      
+      },
       {
         path: "favourites",
         element: <FavouritesPage />,

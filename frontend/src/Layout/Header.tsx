@@ -1,5 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
-import { FaSearch, FaShoppingCart, FaUser, FaHeart } from "react-icons/fa";
+import { FaShoppingCart, FaUser, FaHeart } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 import { useCartStore } from "../store/CartStore";
 import { useFavouritesStore } from "../store/FavouritesStore";
 
@@ -48,7 +49,7 @@ export default function Header() {
       </nav>
 
       <div className="flex items-center gap-4">
-        <FaSearch className="primary-text cursor-pointer hover:text-secondary-text" />
+        {/* <FaSearch className="primary-text cursor-pointer hover:text-secondary-text" /> */}
 
         <Link to="/favourites" className="relative">
           <FaHeart className="primary-text cursor-pointer hover:text-secondary-text" />

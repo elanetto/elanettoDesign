@@ -1,39 +1,44 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useStickerStore } from "../store/stickerStore";
-import { Sticker } from "../types/sticker";
+import { FaSearch } from "react-icons/fa";
 
-interface SearchProps {
-    setResults: (results: Sticker[]) => void;
-}
+export function Search() {
+  const { searchQuery, setSearchQuery } = useStickerStore();
+  const location = useLocation();
 
-export function Search({ setResults }: SearchProps) {
-    const [input, setInput] = useState("");
-    const { stickers } = useStickerStore();
+  useEffect(() => {
+    setSearchQuery("");
+  }, [location.pathname, setSearchQuery]);
 
-    const filterProducts = (value: string) => {
-        setInput(value);
+  const handleSearch = () => {
+    console.log("Search triggered:", searchQuery);
+  };
 
-        if (!value) {
-            setResults(stickers);
-            return;
-        }
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
-        const filteredResults = stickers.filter((product) =>
-            product.title.toLowerCase().includes(value.toLowerCase())
-        );
-
-        setResults(filteredResults);
-    };
-
-    return (
-        <div className="relative w-full max-w-md">
-            <input
-                className="border rounded p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
-                type="text"
-                placeholder="search products..."
-                value={input}
-                onChange={(e) => filterProducts(e.target.value)}
-            />
-        </div>
-    );
+  return (
+    <div className="w-full max-w-3xl mx-auto my-4 px-4">
+      <div className="flex rounded-xl shadow-sm border focus-within:ring-2 focus-within:ring-primary overflow-hidden">
+        <input
+          className="flex-grow px-4 py-2 focus:outline-none"
+          type="text"
+          placeholder="Search stickers..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <button
+          onClick={handleSearch}
+          className="px-4 bg-primary text-white hover:bg-primary-hover transition"
+        >
+          <FaSearch />
+        </button>
+      </div>
+    </div>
+  );
 }
