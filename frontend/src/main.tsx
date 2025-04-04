@@ -22,6 +22,7 @@ import AdminLayout from "./routes/AdminPage/AdminLayout";
 import { Toaster } from "react-hot-toast";
 import AccountPage from "./routes/AccountPage";
 import FavouritesPage from "./routes/FavouritesPage";
+import NotFoundPage from "./routes/NotFoundPage";
 import ShopPage from "./routes/ShopPage";
 
 const router = createBrowserRouter([
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
         path: "account",
         element: <AccountPage />,
       },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      }      
     ],
   },
   {
