@@ -1,9 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { FaSearch, FaShoppingCart, FaHeart } from "react-icons/fa";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useCartStore } from "../store/CartStore";
 import { useFavouritesStore } from "../store/FavouritesStore";
-import { MobileSearch } from "../components/MobileSearch";
 
 export default function MobileHeader() {
   const { getTotalItems } = useCartStore();
@@ -13,23 +11,6 @@ export default function MobileHeader() {
     (state) => state.favourites.length
   );
 
-  const [showSearch, setShowSearch] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target as Node)
-      ) {
-        setShowSearch(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   return (
     <header className="flex justify-between items-center p-4 bg-white shadow-md relative">
       <Link to="/" className="text-lg font-bold">
@@ -37,13 +18,6 @@ export default function MobileHeader() {
       </Link>
 
       <div className="flex items-center gap-4">
-        <button
-          className="text-black hover:text-secondary-text"
-          onClick={() => setShowSearch(!showSearch)}
-        >
-          <FaSearch size={18} />
-        </button>
-
         <Link to="/favourites" className="relative">
           <FaHeart size={20} className="text-black hover:text-secondary-text" />
           {favouritesCount > 0 && (
@@ -64,15 +38,6 @@ export default function MobileHeader() {
           )}
         </div>
       </div>
-
-      {showSearch && (
-        <div
-          className="absolute top-full left-0 right-0 p-4 bg-white shadow z-10"
-          ref={searchRef}
-        >
-          <MobileSearch setShowSearch={setShowSearch} />
-        </div>
-      )}
     </header>
   );
 }
