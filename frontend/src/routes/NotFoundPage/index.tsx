@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function NotFoundPage() {
   const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    document.title = `404 | elanetto Design`;
+  }, []); 
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white text-center p-6">

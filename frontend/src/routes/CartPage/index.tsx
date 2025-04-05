@@ -3,6 +3,7 @@ import ProductCard from "../../components/ProductCard";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import OrderSummary from "../../components/OrderSummary";
+import { useEffect } from "react";
 
 export default function CartPage() {
   const { cart, getTotalPrice } = useCartStore();
@@ -20,6 +21,10 @@ export default function CartPage() {
     }
     return acc;
   }, 0);
+
+  useEffect(() => {
+      document.title = `Cart | elanetto Design`;
+  }, []); 
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16">

@@ -4,6 +4,15 @@ import { BASE_URL } from "../../constants";
 import ProductCard from "../../components/ProductCard";
 import { Sticker } from "../../types/sticker";
 
+const categoryImages: Record<string, string> = {
+  Cute: "/cute_category.png",
+  Plants: "/plants_category.png",
+  Geeky: "/geeky_category.png",
+  Funny: "/funny_category.png",
+  Journaling: "/journaling_category.png",
+  Default: "/category_default.png",
+}; 
+
 export default function CategoryDetailsPage() {
   const params = useParams();
   const categoryId = params.categoryId;
@@ -11,7 +20,7 @@ export default function CategoryDetailsPage() {
 
   const [products, setProducts] = useState<Sticker[]>([]);
   const [categoryName, setCategoryName] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchCategoryProducts = async () => {
@@ -54,7 +63,42 @@ export default function CategoryDetailsPage() {
     if (categoryId && product_type) {
       fetchCategoryProducts();
     }
-  }, [categoryId, product_type]);  
+  }, [categoryId, product_type]);
+  
+  // Add category as title to tab + Add specific META for this page
+  useEffect(() => {
+    if (categoryName) {
+      const title = `${categoryName} ${product_type === "sticker" ? "Stickers" : "Products"} | elanetto Design`;
+      document.title = title;
+  
+      const updateMetaTag = (nameOrProp: string, content: string, isProperty = false) => {
+        const selector = isProperty ? `meta[property="${nameOrProp}"]` : `meta[name="${nameOrProp}"]`;
+        let element = document.head.querySelector(selector);
+  
+        if (!element) {
+          element = document.createElement("meta");
+          if (isProperty) {
+            element.setAttribute("property", nameOrProp);
+          } else {
+            element.setAttribute("name", nameOrProp);
+          }
+          document.head.appendChild(element);
+        }
+  
+        element.setAttribute("content", content);
+      };
+  
+      const imageUrl = categoryImages[categoryName] || categoryImages["Default"];
+  
+      updateMetaTag("description", `Explore all our ${categoryName.toLowerCase()} ${product_type}s! Cute, fun, and handmade just for you.`);
+      updateMetaTag("og:title", title, true);
+      updateMetaTag("og:description", `Explore all our ${categoryName.toLowerCase()} ${product_type}s!`);
+      updateMetaTag("og:image", imageUrl, true);
+      updateMetaTag("twitter:card", "summary_large_image");
+      updateMetaTag("twitter:image", imageUrl);
+      updateMetaTag("keywords", `${categoryName}, stickers, ${product_type}, cute, handmade, elanetto`);
+    }
+  }, [categoryName, product_type]);  
 
   return (
     <section className="p-6 max-w-6xl mx-auto">

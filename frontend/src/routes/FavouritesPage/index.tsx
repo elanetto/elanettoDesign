@@ -1,8 +1,13 @@
 import { useFavouritesStore } from "../../store/FavouritesStore";
 import ProductCard from "../../components/ProductCard";
+import { useEffect } from "react";
 
 export default function FavouritesPage() {
   const { favourites, toggleFavourite } = useFavouritesStore();
+
+  useEffect(() => {
+    document.title = `Favourites | elanetto Design`;
+  }, []); 
 
   return (
     <div className="p-6 max-w-6xl mx-auto pb-4 mb-16">

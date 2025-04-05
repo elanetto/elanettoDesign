@@ -16,6 +16,10 @@ export default function AdminPage() {
         setSearchResults(stickers);
     }, [stickers]);
 
+    useEffect(() => {
+        document.title = `Admin | elanetto Design`;
+    }, []); 
+
     if (loading) return <Loading/>;
     if (error) return <ErrorMessage message={error}/>;
 
@@ -30,7 +34,7 @@ export default function AdminPage() {
     return (
         <>
             <div className="flex w-full justify-center m-4">
-                <Search setResults={setSearchResults}/>
+                <Search />
             </div>
             <div className="w-full flex">
                 <div className="grid gap-6 p-6 mx-auto mb-20">

@@ -46,7 +46,11 @@ export default function CheckoutPage() {
       navigate("/checkout-success");
 
     }
-  }, [orderConfirmed, cart.length, navigate]);  
+  }, [orderConfirmed, cart.length, navigate]);
+  
+  useEffect(() => {
+    document.title = `Checkout | elanetto Design`;
+  }, []); 
 
   const validateManualAddress = (address: Address | null): boolean => {
     if (!address) return false;
