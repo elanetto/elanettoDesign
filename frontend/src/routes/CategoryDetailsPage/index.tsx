@@ -43,19 +43,34 @@ export default function CategoryDetailsPage() {
   
         setCategoryName(data.category);
   
+        const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
         const productData = await Promise.all(
-          data.product_ids.map(async (id: number) => {
-            const productRes = await fetch(`${BASE_URL}/${product_type}s/${id}`);
-            const productJson = await productRes.json();
-            return productJson;
+          data.product_ids.map(async (id: number, i: number) => {
+            try {
+              await delay(i * 100);
+              const productRes = await fetch(`${BASE_URL}/${product_type}s/${id}`);
+              if (!productRes.ok) throw new Error("Fetch failed");
+              return await productRes.json();
+            } catch {
+              console.warn(`Skipping product ${id} due to fetch error`);
+              return null;
+            }
           })
         );
+
+        setProducts(productData.filter(Boolean));
+
+        
+        setProducts(productData.filter(Boolean));
+        
   
         setProducts(productData);
       } catch (error) {
         console.error("❌ Failed to fetch products in category:", error);
         setProducts([]);
       } finally {
+        await new Promise((res) => setTimeout(res, 300));
         setLoading(false);
       }
     };
@@ -105,18 +120,33 @@ export default function CategoryDetailsPage() {
       <h1 className="text-2xl font-bold text-center mb-6">
         Products in category: <span className="text-accent">{categoryName}</span>
       </h1>
-
+  
       {loading ? (
         <p className="text-center">Loading products...</p>
       ) : products.length === 0 ? (
         <p className="text-center">No products found in this category 😢</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 px-4 sm:px-6 lg:px-8">
-          {products.map((product) => (
-            <ProductCard key={`${product_type}-${product.id}`} product={product} mode="customer" />
-          ))}
+        <div className="w-full flex justify-center pb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6 mx-auto items-start">
+            {products.map((product) =>
+              product?.title &&
+              Array.isArray(product.images) &&
+              product.images.length > 0 ? (
+                <ProductCard
+                  key={`${product_type}-${product.id}`}
+                  product={product}
+                  mode="customer"
+                />
+              ) : (
+                <div
+                  key={`placeholder-${product.id}`}
+                  className="bg-gray-100 rounded-xl h-72 animate-pulse"
+                />
+              )
+            )}
+          </div>
         </div>
       )}
     </section>
-  );
+  );  
 }
