@@ -25,6 +25,10 @@ export default function AccountPage() {
     }
   }, [user]);
 
+  useEffect(() => {
+    document.title = `Profile | elanetto Design`;
+  }, []); 
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "Profile":
