@@ -88,10 +88,10 @@ export default function ProductCard({
   }
 
   return (
-    <div className="group bg-white shadow-lg rounded-2xl p-4 w-full flex flex-col items-center relative overflow-hidden transition duration-300 transform hover:-translate-y-1 hover:shadow-xl">
+    <div className="group bg-white shadow-lg rounded-2xl p-4 flex flex-col items-center relative overflow-hidden transition duration-300 transform hover:-translate-y-1 hover:shadow-xl h-full">
       {mode === "customer" && !isCartItem ? (
         <>
-          <Link to={`/products/${product.id}`} className="w-full">
+          <Link to={`/products/${product.id}`} className="block w-full h-full">
             <div className="bg-secondary rounded-xl p-2 w-full flex justify-center overflow-hidden">
               <img
                 src={image}
