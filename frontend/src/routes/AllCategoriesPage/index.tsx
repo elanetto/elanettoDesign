@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import CategoryCard from "../../components/CategoryCard";
 import { BASE_URL } from "../../constants";
-import { Outlet, useParams, useNavigate } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface Category {
   id: number;
@@ -18,7 +19,7 @@ const categoryImages: Record<string, string> = {
 
 export default function AllCategoriesPage() {
   const { product_type } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -49,9 +50,9 @@ export default function AllCategoriesPage() {
     fetchCategories();
   }, []);
 
-  const handleCategoryClick = (categoryId: number) => {
-    navigate(`/category/${categoryId}/${product_type || "sticker"}`);
-  };
+  // const handleCategoryClick = (categoryId: number) => {
+  //   navigate(`/category/${categoryId}/${product_type || "sticker"}`);
+  // };
 
   return (
     <section className="p-4 max-w-7xl mx-auto">
@@ -59,17 +60,19 @@ export default function AllCategoriesPage() {
 
       {/* Mobile buttons */}
       {!loading && !error && (
-        <div className="flex flex-wrap gap-2 justify-center mb-6 sm:hidden">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => handleCategoryClick(cat.id)}
-              className="px-4 py-2 text-sm rounded-full bg-primary text-white hover:bg-primary-hover transition"
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
+        <div className="sm:hidden overflow-x-auto mb-6 -mx-4 px-4">
+          <div className="flex gap-3 w-max">
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                to={`/category/${cat.id}/${product_type || "sticker"}`}
+                className="bg-primary text-white px-4 py-2 rounded-full text-sm whitespace-nowrap shrink-0"
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </div>
+        </div>      
       )}
 
       {/* Skeletons / Cards for sm and up */}
