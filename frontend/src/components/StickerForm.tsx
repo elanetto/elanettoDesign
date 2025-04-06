@@ -138,9 +138,16 @@ export default function StickerForm() {
         }
 
         const created = await response.json();
+        // console.log("✅ Created sticker:", created);
         createdStickerId = created.id;
         toast.success("Sticker added successfully!");
       }
+
+      // console.log("📦 Category assignment payload:", {
+      //   product_id: createdStickerId,
+      //   category_id: categoryId,
+      //   product_type: "sticker",
+      // });      
 
       const assignRes = await fetch(`${BASE_URL}/categories/assign`, {
         method: "POST",
