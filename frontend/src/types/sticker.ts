@@ -12,6 +12,19 @@ export type Sticker = {
     created_at: string;
     updated_at: string;
     images?: ProductImage[];
+
+    // ✅ Add this to support the correct category on ProductCard:
+    category_link?: {
+    product_id: number;
+    category_id: number;
+    product_type: string;
+    category?: {
+      id: number;
+      name: string;
+      created_at: string;
+      is_active: boolean;
+    };
+  };
 };
 
 export type ProductImage = {
@@ -20,5 +33,5 @@ export type ProductImage = {
     image_url: string;
     image_alt: string;
     is_primary: boolean;
-  };  
+};  
 

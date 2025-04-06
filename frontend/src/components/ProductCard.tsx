@@ -48,6 +48,7 @@ export default function ProductCard({
         <img
           src={image}
           alt={imageAlt}
+          loading="lazy" // lazy-load images
           className="w-20 h-20 object-cover rounded"
         />
 
@@ -96,13 +97,14 @@ export default function ProductCard({
               <img
                 src={image}
                 alt={imageAlt}
+                loading="lazy" // lazy-load images
                 className="w-[190px] h-[190px] object-cover rounded-md group-hover:scale-105 transition duration-300"
               />
             </div>
             <div className="text-center mt-4">
               <h2 className="text-lg font-semibold">{product.title}</h2>
               <p className="text-secondary-text text-sm">
-                {product.category || "No category"}
+                {product?.category_link?.category?.name || product.category || "No category"}
               </p>
               <p className="text-primary text-xl font-semibold mt-1">
                 NOK {price}
@@ -133,13 +135,14 @@ export default function ProductCard({
             <img
               src={image}
               alt={imageAlt}
+              loading="lazy" // lazy-load images
               className="w-32 h-32 object-cover rounded-md group-hover:scale-105 transition duration-300"
             />
           </div>
           <div className="text-center mt-4">
             <h2 className="text-lg font-semibold">{product.title}</h2>
             <p className="text-secondary-text text-sm">
-              {product.category || "No category"}
+              {product?.category_link?.category?.name || product.category || "No category"}
             </p>
             <p className="text-primary text-xl font-semibold mt-1">
               NOK {price}
