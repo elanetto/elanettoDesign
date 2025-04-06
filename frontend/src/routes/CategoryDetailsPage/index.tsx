@@ -2,68 +2,151 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../../constants";
 import ProductCard from "../../components/ProductCard";
-import { Sticker } from "../../types/sticker"; 
+import { Sticker } from "../../types/sticker";
+
+const categoryImages: Record<string, string> = {
+  Cute: "/cute_category.png",
+  Plants: "/plants_category.png",
+  Geeky: "/geeky_category.png",
+  Funny: "/funny_category.png",
+  Journaling: "/journaling_category.png",
+  Default: "/category_default.png",
+}; 
 
 export default function CategoryDetailsPage() {
-  const { name } = useParams(); // this is the category name like "Cute"
+  const params = useParams();
+  const categoryId = params.categoryId;
+  const product_type = params.product_type;
+
   const [products, setProducts] = useState<Sticker[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [categoryName, setCategoryName] = useState("");
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       setLoading(true);
       try {
-        const types = ["sticker", "bookmark", "bundle"];
+        const res = await fetch(`${BASE_URL}/categories/${categoryId}/${product_type}`);
+        const data = await res.json();
+  
+        if (!data || !data.product_ids) {
+          console.warn("⚠️ No product_ids found");
+          setProducts([]);
+          setCategoryName("Unknown");
+          return;
+        }
 
-        const allProductIds = await Promise.all(
-          types.map(async (type) => {
-            const res = await fetch(`${BASE_URL}/categories/${name}/${type}`)
-            const data = await res.json();
-            return data.product_ids?.map((id: number) => ({ id, type })) || [];
-          })
-        );
+        if (!categoryId || !product_type) {
+          console.warn("Missing categoryId or product_type!");
+          return;
+        }        
+  
+        setCategoryName(data.category);
+  
+        const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-        const flattened = allProductIds.flat();
-
-        // Fetch product data in parallel
         const productData = await Promise.all(
-          flattened.map(async ({ id, type }) => {
-            const res = await fetch(`${BASE_URL}/${type}s/${id}`);
-            const data = await res.json();
-            return data;
+          data.product_ids.map(async (id: number, i: number) => {
+            try {
+              await delay(i * 100);
+              const productRes = await fetch(`${BASE_URL}/${product_type}s/${id}`);
+              if (!productRes.ok) throw new Error("Fetch failed");
+              return await productRes.json();
+            } catch {
+              console.warn(`Skipping product ${id} due to fetch error`);
+              return null;
+            }
           })
         );
 
+        setProducts(productData.filter(Boolean));
+
+        
+        setProducts(productData.filter(Boolean));
+        
+  
         setProducts(productData);
       } catch (error) {
-        console.error("Failed to fetch products in category:", error);
+        console.error("❌ Failed to fetch products in category:", error);
+        setProducts([]);
       } finally {
+        await new Promise((res) => setTimeout(res, 300));
         setLoading(false);
       }
     };
-
-    if (name) {
+  
+    if (categoryId && product_type) {
       fetchCategoryProducts();
     }
-  }, [name]);
+  }, [categoryId, product_type]);
+  
+  // Add category as title to tab + Add specific META for this page
+  useEffect(() => {
+    if (categoryName) {
+      const title = `${categoryName} ${product_type === "sticker" ? "Stickers" : "Products"} | elanetto Design`;
+      document.title = title;
+  
+      const updateMetaTag = (nameOrProp: string, content: string, isProperty = false) => {
+        const selector = isProperty ? `meta[property="${nameOrProp}"]` : `meta[name="${nameOrProp}"]`;
+        let element = document.head.querySelector(selector);
+  
+        if (!element) {
+          element = document.createElement("meta");
+          if (isProperty) {
+            element.setAttribute("property", nameOrProp);
+          } else {
+            element.setAttribute("name", nameOrProp);
+          }
+          document.head.appendChild(element);
+        }
+  
+        element.setAttribute("content", content);
+      };
+  
+      const imageUrl = categoryImages[categoryName] || categoryImages["Default"];
+  
+      updateMetaTag("description", `Explore all our ${categoryName.toLowerCase()} ${product_type}s! Cute, fun, and handmade just for you.`);
+      updateMetaTag("og:title", title, true);
+      updateMetaTag("og:description", `Explore all our ${categoryName.toLowerCase()} ${product_type}s!`);
+      updateMetaTag("og:image", imageUrl, true);
+      updateMetaTag("twitter:card", "summary_large_image");
+      updateMetaTag("twitter:image", imageUrl);
+      updateMetaTag("keywords", `${categoryName}, stickers, ${product_type}, cute, handmade, elanetto`);
+    }
+  }, [categoryName, product_type]);  
 
   return (
     <section className="p-6 max-w-6xl mx-auto">
       <h1 className="text-2xl font-bold text-center mb-6">
-        Products in category: <span className="text-accent">{name}</span>
+        Products in category: <span className="text-accent">{categoryName}</span>
       </h1>
-
+  
       {loading ? (
         <p className="text-center">Loading products...</p>
       ) : products.length === 0 ? (
         <p className="text-center">No products found in this category 😢</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 px-4 sm:px-6 lg:px-8">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} mode="customer" />
-          ))}
+        <div className="w-full flex justify-center pb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6 mx-auto items-start">
+            {products.map((product) =>
+              product?.title &&
+              Array.isArray(product.images) &&
+              product.images.length > 0 ? (
+                <ProductCard
+                  key={`${product_type}-${product.id}`}
+                  product={product}
+                  mode="customer"
+                />
+              ) : (
+                <div
+                  key={`placeholder-${product.id}`}
+                  className="bg-gray-100 rounded-xl h-72 animate-pulse"
+                />
+              )
+            )}
+          </div>
         </div>
       )}
     </section>
-  );
+  );  
 }

@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
 
 interface CategoryCardProps {
+  id: number;
   name: string;
   image?: string;
+  product_type: string; // dynamic type: sticker, bookmark, etc
 }
 
-export default function CategoryCard({ name, image }: CategoryCardProps) {
+export default function CategoryCard({
+  id,
+  name,
+  image,
+  product_type,
+}: CategoryCardProps) {
   const fallbackImage = "/category_default.png";
 
   return (
-    <Link to={`/category/${name}`} className="block group">
+    <Link to={`/category/${id}/${product_type}`} className="block group">
       <div className="overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
         <img
           src={image || fallbackImage}

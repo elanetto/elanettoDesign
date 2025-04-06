@@ -2,10 +2,18 @@ import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import logout from "../../utilities/logout"
+import AddressForm from "../../components/account/AddressForm";
+import AddressList from "../../components/account/AddressList";
+import { Address } from "../../types/Address";
+
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState("Profile");
   const navigate = useNavigate();
+
+  const [refresh, setRefresh] = useState(false);
+  const [editing, setEditing] = useState<Address | null>(null);
+
   const user = (() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -16,6 +24,10 @@ export default function AccountPage() {
       toast.error("You must be logged in to view this page.");
     }
   }, [user]);
+
+  useEffect(() => {
+    document.title = `Profile | elanetto Design`;
+  }, []); 
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -45,13 +57,29 @@ export default function AccountPage() {
         );
       case "Pending Orders":
         return <p>Pending Orders section coming soon...</p>;
-      case "Order History":
+      
+        case "Order History":
         return <p>Order History section coming soon...</p>;
-      case "Address":
-        return <p>Address section coming soon...</p>;
-      case "Payment":
+        
+        case "Address":
+          return (
+            <div className="space-y-6">
+              <AddressForm
+                onSuccess={() => setRefresh(!refresh)}
+                editingAddress={editing}
+                onCancelEdit={() => setEditing(null)}
+              />
+              <AddressList
+                refreshTrigger={refresh}
+                onEdit={(addr) => setEditing(addr)}
+              />
+            </div>
+          );        
+      
+          case "Payment":
         return <p>Payment section coming soon...</p>;
-      default:
+      
+        default:
         return null;
     }
   };
