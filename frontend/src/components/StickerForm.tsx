@@ -310,7 +310,7 @@ export default function StickerForm() {
               key={index}
               src={image.image_url}
               alt={image.image_alt || "Preview"}
-              className="w-full h-20 object-cover rounded-md border"
+              className="w-full object-cover rounded-md border"
             />
           ) : null
         )}
