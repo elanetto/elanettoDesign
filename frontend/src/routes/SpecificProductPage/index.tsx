@@ -20,9 +20,24 @@ export default function SpecificProductPage() {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      const cached = sessionStorage.getItem(`product-${productId}`);
+      if (cached && cached !== "undefined" && cached !== "") {
+        try {
+          const parsed = JSON.parse(cached);
+          if (parsed && parsed.id) {
+            setProduct(parsed);
+            setLoading(false);
+            return;
+          }
+        } catch (err) {
+          console.warn("⚠️ Failed to parse cached product:", err);
+        }
+      }
+
       try {
         const response = await axios.get(`${BASE_URL}/stickers/${productId}`);
         setProduct(response.data);
+        sessionStorage.setItem(`product-${productId}`, JSON.stringify(response.data));
       } catch {
         setError("Failed to fetch product.");
       } finally {
@@ -33,15 +48,14 @@ export default function SpecificProductPage() {
     fetchProduct();
   }, [productId]);
 
-  // Add title to tab + Add specific META for this page
   useEffect(() => {
     if (product) {
       document.title = `${product.title} | elanetto Design`;
-  
+
       const updateMetaTag = (nameOrProp: string, content: string, isProperty = false) => {
         const selector = isProperty ? `meta[property="${nameOrProp}"]` : `meta[name="${nameOrProp}"]`;
         let element = document.head.querySelector(selector);
-  
+
         if (!element) {
           element = document.createElement("meta");
           if (isProperty) {
@@ -51,13 +65,13 @@ export default function SpecificProductPage() {
           }
           document.head.appendChild(element);
         }
-  
+
         element.setAttribute("content", content);
       };
-  
+
       const firstImage = product.images?.[0];
       const imageAlt = firstImage?.image_alt ?? "";
-  
+
       updateMetaTag("description", product.description ?? "");
       updateMetaTag("og:title", `${product.title} | elanetto Design`, true);
       updateMetaTag("og:description", product.description ?? "", true);
@@ -66,9 +80,28 @@ export default function SpecificProductPage() {
       updateMetaTag("twitter:image", firstImage?.image_url || "https://via.placeholder.com/600");
       updateMetaTag("keywords", `${imageAlt}, stickers, elanetto, cute, fun`);
     }
-  }, [product]);  
-  
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  }, [product]);
+
+  if (loading) {
+    return (
+      <main className="min-h-[80vh]">
+        <div className="max-w-4xl mx-auto p-4 animate-pulse">
+          <div className="flex flex-col lg:flex-row gap-6">
+            <div className="bg-gray-200 h-72 rounded-xl w-full lg:w-1/2" />
+            <div className="space-y-4 flex-1">
+              <div className="h-8 bg-gray-200 rounded w-2/3" />
+              <div className="h-4 bg-gray-200 rounded w-full" />
+              <div className="h-4 bg-gray-200 rounded w-3/4" />
+              <div className="h-4 bg-gray-200 rounded w-1/2" />
+              <div className="h-6 bg-gray-200 rounded w-1/4" />
+              <div className="h-10 bg-gray-200 rounded w-full" />
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
   if (!product) return null;
 
@@ -84,10 +117,10 @@ export default function SpecificProductPage() {
 
   const handleNext = () => {
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }; 
+  };
 
   return (
-    <>
+    <main className="min-h-[80vh]">
       <div className="max-w-4xl mx-auto p-4 pb-28">
         <div className="flex flex-col lg:flex-row gap-6 justify-center">
           {/* Image Section */}
@@ -111,7 +144,7 @@ export default function SpecificProductPage() {
             <img
               src={image}
               alt={imageAlt}
-              className="w-full rounded-xl cursor-pointer object-contain"
+              className="w-full rounded-xl cursor-pointer object-contain transition-opacity duration-300"
               onClick={() => setIsZoomed(true)}
             />
             <p className="text-center mt-2 text-gray-600 text-sm">{imageAlt}</p>
@@ -177,6 +210,6 @@ export default function SpecificProductPage() {
           </p>
         </div>
       </div>
-    </>
+    </main>
   );
 }
