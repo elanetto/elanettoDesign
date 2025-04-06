@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CategoryCard from "../../components/CategoryCard";
 import { BASE_URL } from "../../constants";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams, useNavigate } from "react-router-dom";
 
 interface Category {
   id: number;
@@ -18,6 +18,7 @@ const categoryImages: Record<string, string> = {
 
 export default function AllCategoriesPage() {
   const { product_type } = useParams();
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -30,7 +31,7 @@ export default function AllCategoriesPage() {
         setLoading(false);
         return;
       }
-  
+
       try {
         const res = await fetch(`${BASE_URL}/categories`);
         if (!res.ok) throw new Error("Failed to fetch categories");
@@ -44,14 +45,34 @@ export default function AllCategoriesPage() {
         setLoading(false);
       }
     };
-  
+
     fetchCategories();
-  }, []);  
+  }, []);
+
+  const handleCategoryClick = (categoryId: number) => {
+    navigate(`/category/${categoryId}/${product_type || "sticker"}`);
+  };
 
   return (
     <section className="p-4 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-center">Shop by Category</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center hidden sm:block">Shop by Category</h2>
 
+      {/* Mobile buttons */}
+      {!loading && !error && (
+        <div className="flex flex-wrap gap-2 justify-center mb-6 sm:hidden">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => handleCategoryClick(cat.id)}
+              className="px-4 py-2 text-sm rounded-full bg-primary text-white hover:bg-primary-hover transition"
+            >
+              {cat.name}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Skeletons / Cards for sm and up */}
       {loading ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
@@ -64,7 +85,7 @@ export default function AllCategoriesPage() {
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6 transition-opacity duration-500 opacity-100">
+        <div className="hidden sm:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6 transition-opacity duration-500 opacity-100">
           {categories.map((cat) => (
             <CategoryCard
               key={cat.id}
