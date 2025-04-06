@@ -7,10 +7,10 @@ export default function FavouritesPage() {
 
   useEffect(() => {
     document.title = `Favourites | elanetto Design`;
-  }, []); 
+  }, []);
 
   return (
-    <div className="p-6 max-w-6xl mx-auto pb-4 mb-16">
+    <main className="min-h-[80vh] p-6 max-w-6xl mx-auto pb-4 mb-16">
       <h1 className="text-2xl font-bold mb-6">Your Favourites</h1>
       {favourites.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -28,6 +28,6 @@ export default function FavouritesPage() {
           You haven't added any favourites yet!
         </p>
       )}
-    </div>
+    </main>
   );
 }
