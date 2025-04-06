@@ -140,7 +140,7 @@ export default function StickerForm() {
         const created = await response.json();
         createdStickerId = created.id;
         toast.success("Sticker added successfully!");
-      }
+      }     
 
       const assignRes = await fetch(`${BASE_URL}/categories/assign`, {
         method: "POST",

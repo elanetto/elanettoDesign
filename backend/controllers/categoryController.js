@@ -30,33 +30,37 @@ export const createCategory = async (req, res) => {
 export const assignCategoryToProduct = async (req, res) => {
   try {
     const { product_id, product_type, category_id } = req.body;
+    // console.log("📩 Incoming assign category request:", req.body);
 
-    // Remove all existing categories for this product and type
+    if (!product_id || !product_type || !category_id) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const category = await Category.findByPk(category_id);
+    if (!category) {
+      return res.status(404).json({ error: `Category ID '${category_id}' not found` });
+    }
+
     await ProductCategory.destroy({
       where: { product_id, product_type }
     });
 
-    // Assign the new one
     const assignment = await ProductCategory.create({
       product_id,
       product_type,
       category_id,
     });
 
-    // ALSO update the category column on the sticker if product_type is "sticker"
     if (product_type === "sticker") {
-      const category = await Category.findByPk(category_id);
-      if (category) {
-        await Sticker.update(
-          { category: category.name },
-          { where: { id: product_id } }
-        );
-      }
+      await Sticker.update(
+        { category: category.name },
+        { where: { id: product_id } }
+      );
     }
 
     res.status(201).json({ message: "Category assigned to product", assignment });
   } catch (error) {
-    console.error("Error assigning category:", error);
+    console.error("🔥 Error assigning category:", error);
     res.status(500).json({ error: "Failed to assign category." });
   }
 };
