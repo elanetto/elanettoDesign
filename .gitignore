@@ -8,6 +8,8 @@
 
 # Build directories
 **/dist/
+**/.idea/
+
 
 # Logs
 *.log

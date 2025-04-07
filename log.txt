@@ -1,0 +1,142 @@
+    24	Anette Therese Lindberg <101054274+elanetto@users.noreply.github.com>
+     9	Helflaa <146756162+Helflaa@users.noreply.github.com>
+    14	Line Svensen <144799112+LineSvensen@users.noreply.github.com>
+    47	Panida Paethanom <143201084+Panida287@users.noreply.github.com>
+    33	elanetto <101054274+elanetto@users.noreply.github.com>
+Anette Therese Lindberg (24):
+      Create README.md
+      Update README.md
+      Update README.md
+      Update README.md
+      Merge pull request #45 from elanetto/16-frontend-admin-dashboard-ui
+      Merge pull request #55 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #56 from elanetto/Frontend-Admin-Dashboard-UI
+      Merge pull request #61 from elanetto/60-backend-crud-for-favourites
+      Merge pull request #62 from elanetto/backend
+      Merge pull request #63 from elanetto/Features
+      Merge pull request #65 from elanetto/64-scrum-log-week-2
+      Merge pull request #67 from elanetto/66-backend-crud-for-orders
+      Merge pull request #70 from elanetto/69-backend-crud-for-cart
+      Merge pull request #72 from elanetto/71-backend-set-up-to-deploy-render-api
+      Merge pull request #73 from elanetto/backend
+      Merge pull request #74 from elanetto/Features
+      Merge pull request #83 from elanetto/81-feat-shop-by-category
+      Merge pull request #85 from elanetto/Features
+      Merge pull request #89 from elanetto/88-fix-edits-of-frontend-code-to-deploy-site
+      Merge pull request #91 from elanetto/90-fix-shop-by-category
+      Merge pull request #93 from elanetto/92-finish-login-form
+      Merge pull request #95 from elanetto/94-setup-homepage
+      Merge pull request #97 from elanetto/96-initial-setup-account-page
+      Merge pull request #99 from elanetto/98-logout-functionality
+
+Helflaa (9):
+      Feat: created CRUD operation for stickers
+      added CRUD opertation for user
+      Merge branch 'backend' into 8-implement-crud-for-products-backend-api
+      Feat: implement cart system
+      Merge pull request #75 from elanetto/develop-shopping-cart-system
+      Merge pull request #77 from elanetto/76-fix-fetch-backend-categories-into-stickerform
+      Feat: added search function
+      Merge pull request #79 from elanetto/Features
+      Feat: added login placeholder
+
+Line Svensen (14):
+      productCard.tsx. bg-pink-100 changed to the correct color we named secondary
+      Header.tsx . Nav icons desktop changed from gray-700 to primary-text
+      Header.tsx. Hover on nav icons on desktop.
+      MobileHeader.tsx. Hover/clicked color changed from gray-600 to secondary-text color. Notification changed from red-600 to primary.
+      MobileNavBar.tsx nav bar icons and text changed to black
+      Header.tsx. Home and shop color changed to black when default
+      AddToCart.tsx. added color to add to cart button
+      Merge branch 'Features' into frontend-review-and-update-color-consistancy-based-on-figma-design
+      Merge pull request #82 from elanetto/frontend-review-and-update-color-consistancy-based-on-figma-design
+      ProductsPage index line 29. ProductCard.tsx line 33. now cards are displayed column with rows that wraps when scaling down.
+      Merge pull request #87 from elanetto/86-chore-frontend-cards-homepage-columngrid
+      Merge branch 'Features' of https://github.com/elanetto/elanettoDesign into Features
+      Merge branch 'Features' of https://github.com/elanetto/elanettoDesign into Features
+      ProductsPage index line 29. ProductCard.tsx line 33. now cards are displayed column with rows that wraps when scaling down.
+
+Panida Paethanom (47):
+      Merge pull request #29 from elanetto/8-implement-crud-for-products-backend-api
+      Merge pull request #31 from elanetto/30-implement-crud-for-category-backend-api
+      Merge pull request #35 from elanetto/8-implement-crud-for-products-backend-api
+      Merge pull request #33 from elanetto/32-implementing-sql-product_images-table-to-products-api
+      Update .gitignore
+      Merge pull request #36 from elanetto/backend
+      feat: Added pages and routes
+      config tailwind
+      feat: added Layout for admin page
+      Merge pull request #40 from elanetto/34-implement-crud-for-sticker_alternatives
+      Merge pull request #41 from elanetto/39-implement-crud-for-bookmarks
+      Merge pull request #43 from elanetto/42-implement-crud-for-bundle
+      feat: implemented product management for admin
+      Merge pull request #37 from elanetto/4-implement-a-basic-routing-structure-using-react-router
+      Merge pull request #46 from elanetto/44-implement-crud-for-category
+      Update .gitignore
+      Merge branch 'Features' of https://github.com/elanetto/elanettoDesign into Features
+      Update .gitignore
+      backend and frontend update
+      Create package-lock 4.json
+      Merge pull request #47 from elanetto/Features
+      Merge pull request #48 from elanetto/backend
+      deleted duplucated files
+      chore: config screen sizes for tailwind
+      feat: added mobile nav bar and header
+      refactored: made ProductCard reusable
+      feat: fetch and display products
+      Merge pull request #49 from elanetto/11-fetch-and-display-products-from-backend-api
+      fixing missing files
+      Merge pull request #50 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #51 from elanetto/Features
+      Merge pull request #52 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #53 from elanetto/Features
+      Merge pull request #54 from elanetto/Development
+      chore: config tailwind for styling guide
+      refactor: adjusted fetchSticker Function
+      update update sticker route
+      chore: cleaned up comments and linting
+      feat: added edit sticker form
+      Merge pull request #59 from elanetto/develop-shopping-cart-system
+      updated URL to live API URL
+      Merge branch 'Development' of https://github.com/elanetto/elanettoDesign into Development
+      update: cart system
+      Merge pull request #78 from elanetto/38-create-components-for-ui
+      update: added hide/show password
+      Update frontend/src/components/LoginForm.tsx
+      Merge pull request #84 from elanetto/17-user-authentication-role-management-frontend
+
+elanetto (33):
+      Initial setup: Vite React project with TypeScript and Tailwind. The project is structured with frontend and backend folders. Run the project using npm run dev from the root.
+      Added Category CRUD to backend API
+      Added product_images table to API and edited stickers API to implement the possibility to add multiple images to each product
+      Added sticker Alternatives to backend
+      Added bookmark CRUD to backend
+      Added bundles CRUD to backend
+      Added CRUD to both category and product_categories tables from the SQL database
+      added backend CRUD for favourites
+      added log for week 2
+      implemented CRUD for orders in backend
+      Added backend CRUD for cart
+      edited db.js and installed PostgreSQL with npm install pg to add it to the json package. This was to make backend ready to be deployed as an API through Render
+      Fix: Rename CategoryController.js to categoryController.js for Linux compatibility
+      Fix: Prevent Sequelize from adding duplicate primary key in product_categories
+      The Add and Edit sticker forms will now fetch categories from the API
+      Added /category page where we can search for products by category product card
+      Address feedback: emoji log, image fallback, key cleanup
+      Added loginUser fucntion to backend
+      Install jsonwebtoken for user authentication
+      Edited user model
+      Fixed code according to Render feedback to be able to deploy frontend site
+      added _redirects file into public folder
+      Ensure _redirects is included for SPA routing on Render
+      :wq Merge branch 'Development' of https://github.com/elanetto/elanettoDesign into Features
+      Fixed category error and added toast instead of alert
+      Added error handling for category
+      Fixed problems with JWT to login and created working register form
+      Added placeholders to homepage App.tsx
+      Setup initial account page
+      added logout util
+      Added logout to admin layout
+      Edited fetch of user info from local storage in admin header
+      using API instead of .env for deployment
+
