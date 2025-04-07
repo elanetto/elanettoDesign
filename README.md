@@ -3,7 +3,7 @@ Visit deployed project: [elanetto Design](https://elanettodesign.onrender.com/)
 
 # Front End Development - Year 2 - Agency 2
 
-**Task:** Work as a group with sprints and a scrum master to create a project from sracth. We choose to create an online sticker store.
+**Task:** Collaborate as a group using agile methodology with defined sprints and a dedicated Scrum Master to plan, build, and deliver a project from scratch. Our team chose to create an online sticker store.
 
 ---------
 
