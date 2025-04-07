@@ -1,5 +1,63 @@
-# eCommerce store for stickers: elanetto Design
-Lets go!
+![image](https://raw.githubusercontent.com/elanetto/images/refs/heads/main/img/readme-images/elanettodesign.png)
+Visit deployed project: [elanetto Design](https://elanettodesign.onrender.com/)
+
+# Front End Development - Year 2 - Agency 2
+
+**Task:** Work as a group with sprints and a scrum master to create a project from sracth. We choose to create an online sticker store.
+
+---------
+
+## 🎨 Figma 🎨 
+![image](https://raw.githubusercontent.com/elanetto/images/refs/heads/main/img/readme-images/figma-checkout-elanettodesign.png)
+
+Have a look at the design prototype of the website in Figma here: [FIGMA](https://www.figma.com/design/BSJvz3lS6ZuZn2gqsaBSLN/Elanetto-sticker-shop?node-id=0-1&p=f)
+
+---------
+
+
+## 💬 Tools & Languages 💬
+These languages, and Figma, were used:
+- HTML
+- JavaScript
+- Tailwind
+- Vite
+- React
+- TypeScript
+- mySQL
+
+### Hey Meta showcase:
+![image](https://raw.githubusercontent.com/elanetto/images/refs/heads/main/img/readme-images/elanetto-heymeta-readme.png)
+
+The project was written and made on a MacBook, using [Visual Studio Code](https://code.visualstudio.com/)
+
+---------
+
+## 📂 Site map 📂
+
+All users, logged in or not, can search for stickers and see the product cards.
+
+### Main site
+- "/"
+
+### Account
+- "/login"
+- "/register"
+- "/account"
+
+### Shop
+- "/"
+- "/products"
+- "/products/:product_id"
+- "/cart"
+- "/checkout"
+- "/checkout-success"
+
+### Shop by category
+- "/category/:product_type"
+- "category/:categoryId/:product_type"
+
+---------
+
 
 # 🌟 Getting Started 🌟
 Make sure you have the following installed:
