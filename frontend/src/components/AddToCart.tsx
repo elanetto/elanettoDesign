@@ -13,12 +13,18 @@ export function AddToCart({ product }: AddToCartProps) {
   const cartItem = cart.find((item) => item.id === product.id);
   const isInCart = !!cartItem;
 
+  const quantityInCart = cartItem?.quantity || 0;
+  const isMaxReached = quantityInCart >= product.stock_quantity;
+
   return (
     <div className="flex items-center gap-2">
       {!isInCart ? (
         <button
           className="bg-primary hover:bg-primary-hover px-4 py-2 text-white rounded-lg"
-          onClick={() => addToCart(product)}
+          onClick={() => {
+            if (product.stock_quantity > 0) addToCart(product);
+          }}
+          disabled={product.stock_quantity === 0}
         >
           Add to cart
         </button>
@@ -31,11 +37,18 @@ export function AddToCart({ product }: AddToCartProps) {
             -
           </button>
 
-          <span className="text-lg font-semibold">{cartItem.quantity}</span>
+          <span className="text-lg font-semibold">{quantityInCart}</span>
 
           <button
-            onClick={() => itemIncrement(product.id)}
-            className="px-2 py-0.5 w-7 bg-white text-gray-800 rounded-lg hover:bg-gray-100 border shadow-sm flex justify-center items-center"
+            onClick={() => {
+              if (!isMaxReached) itemIncrement(product.id);
+            }}
+            disabled={isMaxReached}
+            className={`px-2 py-0.5 w-7 ${
+              isMaxReached
+                ? "bg-gray-300 text-gray-500"
+                : "bg-white text-gray-800 hover:bg-gray-100"
+            } rounded-lg border shadow-sm flex justify-center items-center`}
           >
             +
           </button>
