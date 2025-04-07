@@ -56,6 +56,9 @@ All users, logged in or not, can search for stickers and see the product cards.
 - "/category/:product_type"
 - "category/:categoryId/:product_type"
 
+### Admin
+Admin does not have its own path, but is only unlocked when the role of the user is set to admin.
+
 ---------
 
 
