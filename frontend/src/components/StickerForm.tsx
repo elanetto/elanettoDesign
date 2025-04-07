@@ -140,7 +140,7 @@ export default function StickerForm() {
         const created = await response.json();
         createdStickerId = created.id;
         toast.success("Sticker added successfully!");
-      }
+      }     
 
       const assignRes = await fetch(`${BASE_URL}/categories/assign`, {
         method: "POST",
@@ -160,7 +160,7 @@ export default function StickerForm() {
         throw new Error(`Failed to assign category: ${assignRes.status}`);
       }
 
-      navigate("/admin");
+      navigate("/account");
     } catch (error) {
       console.error("Error submitting sticker:", error);
       toast.error("Failed to submit sticker.");
@@ -310,7 +310,7 @@ export default function StickerForm() {
               key={index}
               src={image.image_url}
               alt={image.image_alt || "Preview"}
-              className="w-full h-20 object-cover rounded-md border"
+              className="w-full object-cover rounded-md border"
             />
           ) : null
         )}

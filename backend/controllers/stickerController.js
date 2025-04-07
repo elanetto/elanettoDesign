@@ -122,7 +122,8 @@ export const createSticker = async (req, res) => {
 
     await ProductImage.bulkCreate(stickerImages);
 
-    res.status(201).json({ message: "Sticker created successfully", sticker });
+    res.status(201).json({ id: sticker.id, ...sticker.toJSON() });
+
   } catch (error) {
     console.error("Error creating sticker:", error);
     res.status(400).json({

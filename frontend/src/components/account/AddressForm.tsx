@@ -9,9 +9,16 @@ interface Props {
   editingAddress?: Address | null;
   onCancelEdit?: () => void;
   setExternalAddress?: (address: Address | null) => void;
+  formSubmitted?: boolean;
 }
 
-export default function AddressForm({ onSuccess, editingAddress, onCancelEdit, setExternalAddress }: Props) {
+export default function AddressForm({
+  onSuccess,
+  editingAddress,
+  onCancelEdit,
+  setExternalAddress,
+  formSubmitted = false,
+}: Props) {
   const [formData, setFormData] = useState<Address>({
     full_name: "",
     street_address: "",
@@ -23,8 +30,8 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit, s
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [touchedFields, setTouchedFields] = useState<{ [key: string]: boolean }>({});
   const token = localStorage.getItem("token");
-
   const location = useLocation();
   const isCheckoutPage = location.pathname.includes("/checkout");
 
@@ -39,6 +46,11 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit, s
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
+    }));
+
+    setTouchedFields((prev) => ({
+      ...prev,
+      [name]: true,
     }));
   };
 
@@ -85,6 +97,15 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit, s
   useEffect(() => {
     if (isCheckoutPage && setExternalAddress) {
       const validationErrors = validateForm();
+
+      const filteredErrors: typeof validationErrors = {};
+      Object.entries(validationErrors).forEach(([key, message]) => {
+        if (formSubmitted || touchedFields[key]) {
+          filteredErrors[key] = message;
+        }
+      });
+      setErrors(filteredErrors);
+
       const isValid = Object.keys(validationErrors).length === 0;
       if (isValid) {
         setExternalAddress(formData);
@@ -92,7 +113,7 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit, s
         setExternalAddress(null);
       }
     }
-  }, [formData, isCheckoutPage, setExternalAddress, validateForm]);
+  }, [formData, isCheckoutPage, setExternalAddress, validateForm, formSubmitted, touchedFields]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -256,7 +277,7 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit, s
         </label>
       ) : (
         <p className="text-sm text-gray-500 italic">
-          Want to save your address for next time? {" "}
+          Want to save your address for next time?{" "}
           <a href="/login" className="text-blue-600 underline">
             Log in
           </a>
@@ -266,10 +287,7 @@ export default function AddressForm({ onSuccess, editingAddress, onCancelEdit, s
 
       {!isCheckoutPage && (
         <div className="flex gap-2">
-          <button
-            type="submit"
-            className="bg-red-500 text-white px-4 py-2 rounded"
-          >
+          <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded">
             {editingAddress ? "Update" : "Save"}
           </button>
           {editingAddress && (

@@ -56,7 +56,9 @@ export default function AllCategoriesPage() {
 
   return (
     <section className="p-4 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-center hidden sm:block">Shop by Category</h2>
+      <h1 className="text-3xl font-bold mb-6 text-center hidden sm:block">
+        Shop by Category
+      </h1>
 
       {/* Mobile buttons */}
       {!loading && !error && (
@@ -72,7 +74,7 @@ export default function AllCategoriesPage() {
               </Link>
             ))}
           </div>
-        </div>      
+        </div>
       )}
 
       {/* Skeletons / Cards for sm and up */}
