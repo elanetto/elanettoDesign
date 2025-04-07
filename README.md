@@ -14,16 +14,21 @@ Have a look at the design prototype of the website in Figma here: [FIGMA](https:
 
 ---------
 
+# 💬 Tools & Languages 💬
 
-## 💬 Tools & Languages 💬
-These languages, and Figma, were used:
-- HTML
-- JavaScript
-- Tailwind
-- Vite
-- React
-- TypeScript
-- mySQL
+## 🖥️ Frontend
+- HTML – for structuring content
+- CSS with Tailwind – for styling
+- TypeScript – for logic and type safety
+- React – for building UI components
+- Vite – for blazing-fast frontend development
+- Figma – for UI/UX design and prototyping
+
+## 🛠️ Backend
+- JavaScript (Node.js) – for building the server-side logic
+- MySQL – for managing the database
+
+---------
 
 ### Hey Meta showcase:
 ![image](https://raw.githubusercontent.com/elanetto/images/refs/heads/main/img/readme-images/elanetto-heymeta-readme.png)
