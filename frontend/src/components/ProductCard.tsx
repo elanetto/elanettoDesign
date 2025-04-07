@@ -42,15 +42,21 @@ export default function ProductCard({
   const { toggleFavourite, isFavourite } = useFavouritesStore();
   const hearted = isFavourite(product.id);
 
+  const isMaxReached = product.quantity >= product.stock_quantity;
+
   if (mode === "checkout" && isCartItem) {
     return (
       <div className="flex sm:flex-row items-center justify-between gap-4 border-b p-4 bg-white rounded-lg shadow-sm w-full">
-        <img
-          src={image}
-          alt={imageAlt}
-          loading="lazy" // lazy-load images
-          className="w-20 h-20 object-cover rounded"
-        />
+        <div>
+          <Link to={`/products/${product.id}`}>
+            <img
+              src={image}
+              alt={imageAlt}
+              loading="lazy"
+              className="w-20 h-20 object-cover rounded"
+            />
+          </Link>
+        </div>
 
         <div className="flex-1">
           <h3 className="text-lg font-semibold">{product.title}</h3>
@@ -67,8 +73,15 @@ export default function ProductCard({
             </button>
             <span className="text-lg font-semibold">{product.quantity}</span>
             <button
-              onClick={() => itemIncrement(product.id)}
-              className="px-2 py-0.5 w-7 bg-white text-gray-800 rounded-lg hover:bg-gray-100 border shadow-sm flex justify-center items-center"
+              onClick={() => {
+                if (!isMaxReached) itemIncrement(product.id);
+              }}
+              disabled={isMaxReached}
+              className={`px-2 py-0.5 w-7 ${
+                isMaxReached
+                  ? "bg-gray-300 text-gray-500"
+                  : "bg-white text-gray-800 hover:bg-gray-100"
+              } rounded-lg border shadow-sm flex justify-center items-center`}
             >
               +
             </button>
@@ -104,7 +117,9 @@ export default function ProductCard({
             <div className="text-center mt-4">
               <h2 className="text-lg font-semibold">{product.title}</h2>
               <p className="text-secondary-text text-sm">
-                {product?.category_link?.category?.name || product.category || "No category"}
+                {product?.category_link?.category?.name ||
+                  product.category ||
+                  "No category"}
               </p>
               <p className="text-primary text-xl font-semibold mt-1">
                 NOK {price}
@@ -123,7 +138,7 @@ export default function ProductCard({
               } else {
                 toggleFavourite(product);
               }
-            }}            
+            }}
             className="absolute top-6 right-7 text-xl text-primary z-10"
           >
             {hearted ? <FaHeart /> : <FaRegHeart />}
@@ -142,7 +157,9 @@ export default function ProductCard({
           <div className="text-center mt-4">
             <h2 className="text-lg font-semibold">{product.title}</h2>
             <p className="text-secondary-text text-sm">
-              {product?.category_link?.category?.name || product.category || "No category"}
+              {product?.category_link?.category?.name ||
+                product.category ||
+                "No category"}
             </p>
             <p className="text-primary text-xl font-semibold mt-1">
               NOK {price}
