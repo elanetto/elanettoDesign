@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import {useState, useEffect} from "react";
+import {toast} from "react-hot-toast";
+import {Link, useNavigate} from "react-router-dom";
 import logout from "../../utilities/logout";
 import AddressForm from "../../components/account/AddressForm";
 import AddressList from "../../components/account/AddressList";
-import { Address } from "../../types/Address";
-import { useStickerStore } from "../../store/stickerStore";
-import { useFetchStickers } from "../../hooks/useFetchStickers";
-import { Sticker } from "../../types/sticker";
-import { Search } from "../../components/Search";
+import {Address} from "../../types/Address";
+import {useStickerStore} from "../../store/stickerStore";
+import {useFetchStickers} from "../../hooks/useFetchStickers";
+import {Sticker} from "../../types/sticker";
+import {Search} from "../../components/Search";
 import ProductCard from "../../components/ProductCard";
-import { ErrorMessage } from "../../utilities/errorMessage";
-import { Loading } from "../../utilities/loading";
+import {ErrorMessage} from "../../utilities/errorMessage";
+import {Loading} from "../../utilities/loading";
 
 export default function AccountPage() {
     const [activeTab, setActiveTab] = useState("Profile");
@@ -27,17 +27,17 @@ export default function AccountPage() {
 
     const isAdmin = user?.role === "admin";
 
-    const { stickers, loading, error, deleteSticker } = useFetchStickers();
-    const { searchQuery } = useStickerStore();
+    const {stickers, loading, error, deleteSticker} = useFetchStickers();
+    const {searchQuery} = useStickerStore();
 
     useEffect(() => {
         if (!user) {
-          toast.error("You must be logged in to view this page.");
-          setTimeout(() => {
-            navigate("/login");
-          }, 1500); // Wait 1.5 seconds before redirecting
+            toast.error("You must be logged in to view this page.");
+            setTimeout(() => {
+                navigate("/login");
+            }, 1500); // Wait 1.5 seconds before redirecting
         }
-    }, [user, navigate]);          
+    }, [user, navigate]);
 
     useEffect(() => {
         if (!searchQuery) {
@@ -85,15 +85,17 @@ export default function AccountPage() {
                                 </p>
                             </div>
                         </div>
-                        <p className="text-sm text-gray-500 mt-2">
-                            (Avatar upload functionality coming soon!)
-                        </p>
-                        <button
-                            onClick={() => logout(navigate)}
-                            className="mt-6 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                        >
-                            Logout
-                        </button>
+                        <div className="flex flex-col justify-center items-center">
+                            <p className="text-sm text-gray-500 mt-2">
+                                (Avatar upload functionality coming soon!)
+                            </p>
+                            <button
+                                onClick={() => logout(navigate)}
+                                className="mt-6 px-4 py-2 w-fit bg-red-500 text-white rounded hover:bg-red-600"
+                            >
+                                Logout
+                            </button>
+                        </div>
                     </div>
                 );
 

@@ -60,24 +60,24 @@ export default function AllCategoriesPage() {
 
       {/* Mobile buttons */}
       {!loading && !error && (
-        <div className="sm:hidden overflow-x-auto mb-6 -mx-4 px-4">
-          <div className="flex gap-3 w-max">
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                to={`/category/${cat.id}/${product_type || "sticker"}`}
-                className="bg-primary text-white px-4 py-2 rounded-full text-sm whitespace-nowrap shrink-0"
-              >
-                {cat.name}
-              </Link>
-            ))}
+          <div className="sm:hidden mb-6 px-4">
+            <div className="flex flex-wrap gap-3">
+              {categories.map((cat) => (
+                  <Link
+                      key={cat.id}
+                      to={`/category/${cat.id}/${product_type || "sticker"}`}
+                      className="bg-primary text-white px-4 py-2 rounded-full text-sm whitespace-nowrap shrink-0"
+                  >
+                    {cat.name}
+                  </Link>
+              ))}
+            </div>
           </div>
-        </div>      
       )}
 
       {/* Skeletons / Cards for sm and up */}
       {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={`skeleton-${i}`}
