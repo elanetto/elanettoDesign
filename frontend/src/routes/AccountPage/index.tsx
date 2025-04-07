@@ -32,9 +32,10 @@ export default function AccountPage() {
 
     useEffect(() => {
         if (!user) {
-            toast.error("You must be logged in to view this page.");
+          toast.error("You must be logged in to view this page.");
+          navigate("/login");
         }
-    }, [user]);
+      }, [user, navigate]);      
 
     useEffect(() => {
         if (!searchQuery) {
@@ -190,7 +191,7 @@ export default function AccountPage() {
                 ))}
             </div>
 
-            <div className="mt-6">{renderTabContent()}</div>
+            <div className="mt-6 min-h-[70vh]">{renderTabContent()}</div>
         </div>
     );
 }
