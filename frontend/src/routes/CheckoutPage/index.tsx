@@ -66,7 +66,7 @@ export default function CheckoutPage() {
   };
 
   const handlePlaceOrder = () => {
-    setFormSubmitted(true); // ✅ Trigger validation display in AddressForm
+    setFormSubmitted(true);
 
     const newErrors: { address?: string; payment?: string } = {};
 
@@ -143,7 +143,7 @@ export default function CheckoutPage() {
               <AddressForm
                 onSuccess={() => setShowAddressForm(false)}
                 setExternalAddress={setManualAddress}
-                formSubmitted={formSubmitted} // ✅ pass to trigger error display
+                formSubmitted={formSubmitted}
               />
               {!token && (
                 <p className="text-sm text-gray-600 mt-2">
