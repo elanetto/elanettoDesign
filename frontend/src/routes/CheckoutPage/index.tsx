@@ -14,6 +14,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [errors, setErrors] = useState<{ address?: string; payment?: string }>({});
   const [manualAddress, setManualAddress] = useState<Address | null>(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const navigate = useNavigate();
 
   const [orderConfirmed, setOrderConfirmed] = useState(false);
@@ -44,13 +45,12 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (orderConfirmed && cart.length === 0) {
       navigate("/checkout-success");
-
     }
   }, [orderConfirmed, cart.length, navigate]);
-  
+
   useEffect(() => {
     document.title = `Checkout | elanetto Design`;
-  }, []); 
+  }, []);
 
   const validateManualAddress = (address: Address | null): boolean => {
     if (!address) return false;
@@ -66,29 +66,30 @@ export default function CheckoutPage() {
   };
 
   const handlePlaceOrder = () => {
+    setFormSubmitted(true); // ✅ Trigger validation display in AddressForm
+
     const newErrors: { address?: string; payment?: string } = {};
-  
+
     const addressIsMissing =
       (!token && (!manualAddress || !validateManualAddress(manualAddress))) ||
       (token && addresses.length > 0 && !selectedAddressId);
-  
+
     if (addressIsMissing) {
       newErrors.address = "Please fill in or select an address before proceeding.";
     }
-  
+
     if (!paymentMethod) {
       newErrors.payment = "Please select a payment method.";
     }
-  
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-  
+
     clearCart();
-    setOrderConfirmed(true); // ✅ trigger redirect after cart is cleared
+    setOrderConfirmed(true);
   };
-  
 
   const savings = cart.reduce((acc, item) => {
     if (item.discount && item.discount > 0) {
@@ -140,10 +141,9 @@ export default function CheckoutPage() {
           {!token || showAddressForm ? (
             <>
               <AddressForm
-                onSuccess={() => {
-                  setShowAddressForm(false);
-                }}
+                onSuccess={() => setShowAddressForm(false)}
                 setExternalAddress={setManualAddress}
+                formSubmitted={formSubmitted} // ✅ pass to trigger error display
               />
               {!token && (
                 <p className="text-sm text-gray-600 mt-2">
