@@ -59,11 +59,25 @@ All users, logged in or not, can search for stickers and see the product cards.
 ---------
 
 
+## 🌤️ API 🌤️
+The backend of this project is built using Node.js, Express, and Sequelize (with a MySQL database). The architecture follows the MVC pattern (Model-View-Controller), making the codebase modular and maintainable.
+
+- Models define the database tables and relationships using Sequelize.
+- Controllers handle the business logic for each resource (e.g., products, categories, orders).
+- Routes map HTTP requests to their corresponding controller actions.
+- Authentication is managed with JSON Web Tokens (JWT).
+- The API is RESTful, supporting full CRUD operations for resources like stickers, bookmarks, bundles, categories, orders, and more.
+- It is deployed using Render, with CORS and middleware configured for security and performance.
+
+---------
+
+
 # 🌟 Getting Started 🌟
 Make sure you have the following installed:
 
-- A web browser (Example: Chrome)
-- A code editor (Example: Visual Studio Code)
+- A web browser (e.g. Chrome)
+- A code editor (e.g. Visual Studio Code)
+- Node.js and npm (v18+ recommended)
 
 ##  🛠️ Installation 🛠️
 1. Clone the repository:
