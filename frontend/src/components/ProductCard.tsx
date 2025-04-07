@@ -42,7 +42,10 @@ export default function ProductCard({
   const { toggleFavourite, isFavourite } = useFavouritesStore();
   const hearted = isFavourite(product.id);
 
-  const isMaxReached = product.quantity >= product.stock_quantity;
+  const isMaxReached =
+  isCartItem && typeof product.stock_quantity === "number"
+    ? product.quantity >= product.stock_quantity
+    : false;
 
   if (mode === "checkout" && isCartItem) {
     return (
@@ -72,6 +75,10 @@ export default function ProductCard({
               -
             </button>
             <span className="text-lg font-semibold">{product.quantity}</span>
+            {isMaxReached && (
+              <p className="text-xs text-red-500 mt-1">Max stock reached</p>
+            )}
+
             <button
               onClick={() => {
                 if (!isMaxReached) itemIncrement(product.id);

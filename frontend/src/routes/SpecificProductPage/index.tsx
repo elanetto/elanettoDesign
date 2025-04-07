@@ -7,6 +7,8 @@ import { AddToCart } from "../../components/AddToCart";
 import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
 import { useFavouritesStore } from "../../store/FavouritesStore";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useCartStore } from "../../store/CartStore";
+
 
 export default function SpecificProductPage() {
   const { productId } = useParams();
@@ -17,6 +19,11 @@ export default function SpecificProductPage() {
   const [loading, setLoading] = useState(true);
   const { isFavourite, toggleFavourite } = useFavouritesStore();
   const hearted = product ? isFavourite(product.id) : false;
+  const { cart } = useCartStore();
+
+  const cartItem = cart.find((item) => item.id === product?.id);
+  const currentQuantity = cartItem?.quantity || 0;
+  const isMaxReached = product ? currentQuantity >= product.stock_quantity : false;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -173,6 +180,9 @@ export default function SpecificProductPage() {
             </p>
 
             <AddToCart product={product} />
+            {isMaxReached && (
+              <p className="text-xs text-red-500 mt-1">Max stock reached</p>
+            )}
           </div>
         </div>
 
