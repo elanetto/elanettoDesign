@@ -193,7 +193,7 @@ export default function AccountPage() {
                 ))}
             </div>
 
-            <div className="mt-6 min-h-[70vh]">{renderTabContent()}</div>
+            <div className="mt-6 min-h-screen sm:min-h-[70vh]">{renderTabContent()}</div>
         </div>
     );
 }
