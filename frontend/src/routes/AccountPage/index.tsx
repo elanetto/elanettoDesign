@@ -33,9 +33,11 @@ export default function AccountPage() {
     useEffect(() => {
         if (!user) {
           toast.error("You must be logged in to view this page.");
-          navigate("/login");
+          setTimeout(() => {
+            navigate("/login");
+          }, 1500); // Wait 1.5 seconds before redirecting
         }
-      }, [user, navigate]);      
+    }, [user, navigate]);          
 
     useEffect(() => {
         if (!searchQuery) {
