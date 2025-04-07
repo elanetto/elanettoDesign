@@ -160,7 +160,7 @@ export default function StickerForm() {
         throw new Error(`Failed to assign category: ${assignRes.status}`);
       }
 
-      navigate("/admin");
+      navigate("/account");
     } catch (error) {
       console.error("Error submitting sticker:", error);
       toast.error("Failed to submit sticker.");
