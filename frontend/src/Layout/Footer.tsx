@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaFacebookF, FaInstagram, FaPinterest } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaPinterest, FaTiktok } from "react-icons/fa";
 import { BASE_URL } from "../constants";
 
 export default function Footer() {
@@ -104,7 +104,8 @@ export default function Footer() {
             <div className="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
                 <p>© 2025 Elanetto. All rights reserved.</p>
                 <div className="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" className="hover:text-primary"><FaInstagram /></a>
+                    <a href="https://www.instagram.com/elanetto.design/" className="hover:text-primary"><FaInstagram /></a>
+                    <a href="https://www.tiktok.com/@elanetto.design" className="hover:text-primary"><FaTiktok /></a>
                     <a href="#" className="hover:text-primary"><FaFacebookF /></a>
                     <a href="#" className="hover:text-primary"><FaPinterest /></a>
                 </div>

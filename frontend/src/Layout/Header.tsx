@@ -1,10 +1,14 @@
 import { NavLink, Link } from "react-router-dom";
+import { useState } from "react";
 import { FaShoppingCart, FaUser, FaHeart } from "react-icons/fa";
-// import { FaSearch } from "react-icons/fa";
 import { useCartStore } from "../store/CartStore";
 import { useFavouritesStore } from "../store/FavouritesStore";
+import logo from "../assets/elanettoDesignLogo-tailwind-pink.svg";
+import darkerLogo from "../assets/elanettoDesign-logo-darker-tailwind-pink.svg";
 
 export default function Header() {
+  const [isHovered, setIsHovered] = useState(false);
+
   const { getTotalItems } = useCartStore();
   const favouritesCount = useFavouritesStore(
     (state) => state.favourites.length
@@ -13,15 +17,22 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-      <Link to="/" className="flex items-center gap-2">
-        <span className="text-lg font-semibold text-primary">
-          ElanettoDesign
-        </span>
+      <Link
+        to="/"
+        className="flex items-center gap-2"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <img
+          src={isHovered ? darkerLogo : logo}
+          alt="elanetto Design logo"
+          className="h-12 transition-all duration-300"
+        />
       </Link>
 
       <nav>
         <ul className="flex space-x-6 text-black text-sm font-medium">
-          <li>
+          <li className="hidden sm:block">
             <NavLink
               to="/"
               className={({ isActive }) =>
