@@ -1,0 +1,241 @@
+    62	Anette Therese Lindberg <101054274+elanetto@users.noreply.github.com>
+    11	Helflaa <146756162+Helflaa@users.noreply.github.com>
+    35	Line Svensen <144799112+LineSvensen@users.noreply.github.com>
+    48	Panida Paethanom <143201084+Panida287@users.noreply.github.com>
+    70	elanetto <101054274+elanetto@users.noreply.github.com>
+Anette Therese Lindberg (62):
+      Create README.md
+      Update README.md
+      Update README.md
+      Update README.md
+      Merge pull request #45 from elanetto/16-frontend-admin-dashboard-ui
+      Merge pull request #55 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #56 from elanetto/Frontend-Admin-Dashboard-UI
+      Merge pull request #61 from elanetto/60-backend-crud-for-favourites
+      Merge pull request #62 from elanetto/backend
+      Merge pull request #63 from elanetto/Features
+      Merge pull request #65 from elanetto/64-scrum-log-week-2
+      Merge pull request #67 from elanetto/66-backend-crud-for-orders
+      Merge pull request #70 from elanetto/69-backend-crud-for-cart
+      Merge pull request #72 from elanetto/71-backend-set-up-to-deploy-render-api
+      Merge pull request #73 from elanetto/backend
+      Merge pull request #74 from elanetto/Features
+      Merge pull request #83 from elanetto/81-feat-shop-by-category
+      Merge pull request #85 from elanetto/Features
+      Merge pull request #89 from elanetto/88-fix-edits-of-frontend-code-to-deploy-site
+      Merge pull request #91 from elanetto/90-fix-shop-by-category
+      Merge pull request #93 from elanetto/92-finish-login-form
+      Merge pull request #95 from elanetto/94-setup-homepage
+      Merge pull request #97 from elanetto/96-initial-setup-account-page
+      Merge pull request #99 from elanetto/98-logout-functionality
+      Merge pull request #100 from elanetto/Features
+      Merge pull request #102 from elanetto/101-frontend-specific-product-page
+      Merge pull request #104 from elanetto/103-backend-address
+      Merge pull request #108 from elanetto/105-frontend-address-on-account-page
+      Merge pull request #116 from elanetto/115-fix-sort-by-category
+      Merge pull request #121 from elanetto/117-frontend-checkout-page
+      Merge pull request #124 from elanetto/123-productcard-hover
+      Merge pull request #127 from elanetto/126-fix-checkoutpage-wont-checkout
+      Merge pull request #131 from elanetto/130-frontend-success-page
+      Merge branch 'Features' into 132-404-page
+      Merge pull request #133 from elanetto/132-404-page
+      Merge pull request #135 from elanetto/134-frontend-meta
+      Merge pull request #137 from elanetto/136-seo-sitemap
+      Merge pull request #139 from elanetto/138-frontend-add-title-to-paths
+      Merge pull request #141 from elanetto/140-fix-searchbar-expanded
+      Merge pull request #143 from elanetto/142-fix-productcards-on-categorypage
+      Merge pull request #144 from elanetto/Features
+      Merge pull request #145 from elanetto/Features
+      Merge pull request #146 from elanetto/Features
+      Merge pull request #147 from elanetto/Features
+      Merge pull request #149 from elanetto/148-fix-smaller-category-cards-for-mobile
+      Merge pull request #150 from elanetto/Features
+      Merge pull request #151 from elanetto/148-fix-smaller-category-cards-for-mobile
+      Merge pull request #152 from elanetto/Features
+      Merge pull request #155 from elanetto/154-fix-add-sticker-function
+      Merge pull request #157 from elanetto/156-fix-addressform-error-handling
+      Update frontend/src/routes/AccountPage/index.tsx
+      Merge pull request #160 from elanetto/159-fix-make-footer-keep-to-bottom-on-account-page
+      Update README.md
+      Merge pull request #165 from elanetto/164-fix-path-after-edit-sticker
+      Update README.md
+      Update README.md
+      Update README.md
+      Update README.md
+      Update README.md
+      Merge pull request #168 from elanetto/Development
+      Merge pull request #167 from elanetto/Features
+      Merge pull request #169 from elanetto/Development
+
+Helflaa (11):
+      Feat: created CRUD operation for stickers
+      added CRUD opertation for user
+      Merge branch 'backend' into 8-implement-crud-for-products-backend-api
+      Feat: implement cart system
+      Merge pull request #75 from elanetto/develop-shopping-cart-system
+      Merge pull request #77 from elanetto/76-fix-fetch-backend-categories-into-stickerform
+      Feat: added search function
+      Merge pull request #79 from elanetto/Features
+      Feat: added login placeholder
+      refactored: adminPage to account
+      styled: product display, create and edit
+
+Line Svensen (35):
+      productCard.tsx. bg-pink-100 changed to the correct color we named secondary
+      Header.tsx . Nav icons desktop changed from gray-700 to primary-text
+      Header.tsx. Hover on nav icons on desktop.
+      MobileHeader.tsx. Hover/clicked color changed from gray-600 to secondary-text color. Notification changed from red-600 to primary.
+      MobileNavBar.tsx nav bar icons and text changed to black
+      Header.tsx. Home and shop color changed to black when default
+      AddToCart.tsx. added color to add to cart button
+      Merge branch 'Features' into frontend-review-and-update-color-consistancy-based-on-figma-design
+      Merge pull request #82 from elanetto/frontend-review-and-update-color-consistancy-based-on-figma-design
+      ProductsPage index line 29. ProductCard.tsx line 33. now cards are displayed column with rows that wraps when scaling down.
+      Merge pull request #87 from elanetto/86-chore-frontend-cards-homepage-columngrid
+      Merge branch 'Features' of https://github.com/elanetto/elanettoDesign into Features
+      Merge branch 'Features' of https://github.com/elanetto/elanettoDesign into Features
+      ProductsPage index line 29. ProductCard.tsx line 33. now cards are displayed column with rows that wraps when scaling down.
+      Added new code to ProductCard.tsx. Product card for cart have its own layout. CartPage/index.tsx added some margin and padding etc. Checkout button and go back link better ux. Increment decrement buttons like figma but with border for better ux. scales down smoothly. changed placment of + and -. only for cart page.
+      Merge pull request #107 from elanetto/106-chore-frontend-improving-cart-page-based-on-figma-design
+      Order summary now on cart page. its made as component OrderSummary.tsx. ready to be reused on other pages aswell. changed background on cartpage for better ux and follow figma file. changed button color to primary. scales down smoothly. fixed link to checkoutPage so its now working. TAX and SHIPPING is hardcoded inside cart page, as temporary solution.
+      Merge pull request #110 from elanetto/109-chore-frontend-cart-page-make-order-summary
+      FavouritesPage/index added. FavouritesStore.ts added to store. Added heart on productCard.tsx and SingleProductPage/index.tsx.
+      Merge pull request #112 from elanetto/111-frontend-favourites-hearted-products-to-show-up-at-favourites-page
+      Heart and cart notifications is now working and based on whats hearted and added to cart. the files that have been touched are in layout folder.
+      Merge pull request #114 from elanetto/113-frontend-heart-notification-based-on-hearted-products
+      Primary hover color added to tailwind config and AddToCart.tsx. now all add to cart buttons on website have the hover.
+      Merge pull request #119 from elanetto/118-frontend-buttons-component
+      Stickers on product cards made larger. w-[190px] h-[190px].
+      Merge pull request #122 from elanetto/118-frontend-buttons-component
+      some change in inrement decrement buttons. made a little smaller, color etc.
+      Merge branch 'Features' into 120-fix-frontend-make-product-card-sticker-larger-and-more-visible
+      Merge pull request #125 from elanetto/120-fix-frontend-make-product-card-sticker-larger-and-more-visible
+      Search bar moved to top of page under the  nav for best ux. some improved design and search icon button. search still automatically search, but will also work with clicking button or pressing enter.
+      Merge pull request #129 from elanetto/128-fix-frontend-searchbar
+      ProductCard.tsx and AddToCart.tsx. Now you cant add more products to cart then the stock shows. this is for cards on homepage, single page and in cart. i also added clickable image for products in cart.
+      Merge pull request #161 from elanetto/158-fix-available-items-and-adding-to-cart
+      h1 on all pages
+      Merge pull request #166 from elanetto/163-fix-h1-on-all-pages
+
+Panida Paethanom (48):
+      Merge pull request #29 from elanetto/8-implement-crud-for-products-backend-api
+      Merge pull request #31 from elanetto/30-implement-crud-for-category-backend-api
+      Merge pull request #35 from elanetto/8-implement-crud-for-products-backend-api
+      Merge pull request #33 from elanetto/32-implementing-sql-product_images-table-to-products-api
+      Update .gitignore
+      Merge pull request #36 from elanetto/backend
+      feat: Added pages and routes
+      config tailwind
+      feat: added Layout for admin page
+      Merge pull request #40 from elanetto/34-implement-crud-for-sticker_alternatives
+      Merge pull request #41 from elanetto/39-implement-crud-for-bookmarks
+      Merge pull request #43 from elanetto/42-implement-crud-for-bundle
+      feat: implemented product management for admin
+      Merge pull request #37 from elanetto/4-implement-a-basic-routing-structure-using-react-router
+      Merge pull request #46 from elanetto/44-implement-crud-for-category
+      Update .gitignore
+      Merge branch 'Features' of https://github.com/elanetto/elanettoDesign into Features
+      Update .gitignore
+      backend and frontend update
+      Create package-lock 4.json
+      Merge pull request #47 from elanetto/Features
+      Merge pull request #48 from elanetto/backend
+      deleted duplucated files
+      chore: config screen sizes for tailwind
+      feat: added mobile nav bar and header
+      refactored: made ProductCard reusable
+      feat: fetch and display products
+      Merge pull request #49 from elanetto/11-fetch-and-display-products-from-backend-api
+      fixing missing files
+      Merge pull request #50 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #51 from elanetto/Features
+      Merge pull request #52 from elanetto/3-configure-tailwind-css-for-styling
+      Merge pull request #53 from elanetto/Features
+      Merge pull request #54 from elanetto/Development
+      chore: config tailwind for styling guide
+      refactor: adjusted fetchSticker Function
+      update update sticker route
+      chore: cleaned up comments and linting
+      feat: added edit sticker form
+      Merge pull request #59 from elanetto/develop-shopping-cart-system
+      updated URL to live API URL
+      Merge branch 'Development' of https://github.com/elanetto/elanettoDesign into Development
+      update: cart system
+      Merge pull request #78 from elanetto/38-create-components-for-ui
+      update: added hide/show password
+      Update frontend/src/components/LoginForm.tsx
+      Merge pull request #84 from elanetto/17-user-authentication-role-management-frontend
+      Merge pull request #153 from elanetto/admin
+
+elanetto (70):
+      Initial setup: Vite React project with TypeScript and Tailwind. The project is structured with frontend and backend folders. Run the project using npm run dev from the root.
+      Added Category CRUD to backend API
+      Added product_images table to API and edited stickers API to implement the possibility to add multiple images to each product
+      Added sticker Alternatives to backend
+      Added bookmark CRUD to backend
+      Added bundles CRUD to backend
+      Added CRUD to both category and product_categories tables from the SQL database
+      added backend CRUD for favourites
+      added log for week 2
+      implemented CRUD for orders in backend
+      Added backend CRUD for cart
+      edited db.js and installed PostgreSQL with npm install pg to add it to the json package. This was to make backend ready to be deployed as an API through Render
+      Fix: Rename CategoryController.js to categoryController.js for Linux compatibility
+      Fix: Prevent Sequelize from adding duplicate primary key in product_categories
+      The Add and Edit sticker forms will now fetch categories from the API
+      Added /category page where we can search for products by category product card
+      Address feedback: emoji log, image fallback, key cleanup
+      Added loginUser fucntion to backend
+      Install jsonwebtoken for user authentication
+      Edited user model
+      Fixed code according to Render feedback to be able to deploy frontend site
+      added _redirects file into public folder
+      Ensure _redirects is included for SPA routing on Render
+      :wq Merge branch 'Development' of https://github.com/elanetto/elanettoDesign into Features
+      Fixed category error and added toast instead of alert
+      Added error handling for category
+      Fixed problems with JWT to login and created working register form
+      Added placeholders to homepage App.tsx
+      Setup initial account page
+      added logout util
+      Added logout to admin layout
+      Edited fetch of user info from local storage in admin header
+      using API instead of .env for deployment
+      log for week 3 generated
+      Added specific product page and edited mobile header functionality
+      Added address functionality to backend
+      Made create order more secure
+      added address to user profile
+      fixed delete category error when deleting a sticker
+      fixed image and category issues in product card --> cart
+      fixed category problem
+      Added checkout page
+      edit name of CartPage
+      WIP: started ProductCard hover
+      Fixed checkoutpage
+      Added success page
+      Added 404 page
+      Added route for ProductsPage in main.tsx
+      Added meta data to root index.html file
+      Added sitemap to public folder
+      Added unique <title> to paths
+      Added useFilteredStickers.ts to store, and added fuse.js to it. The search now works in a much more expanded way.
+      productcards on category page now renders after loading time to fetch them all + product cards are now correct size
+      Made the API-link active in constants for deployment
+      edited how the category page loads + edited contants to use API instead of .env
+      editing backend to load products better
+      Made pages load quicker with session storage + added height to pages to force footer down
+      Added tailwind CSS to favourites page to force footer to the bottom
+      Added mini category cards for mobile view
+      Added swipe row for mobile category cards
+      Edited backend to fix add new sticker function
+      removed console.logs
+      Fixed error handling in Address Form for checkout page
+      Edited out comments
+      Added spacing to Account page + automatic navigatio to login if not logged in
+      Added delay
+      Merge branch '159-fix-make-footer-keep-to-bottom-on-account-page' of https://github.com/elanetto/elanettoDesign into 159-fix-make-footer-keep-to-bottom-on-account-page
+      edited path from admin to account
+      editing constats to ready for deployment
+      fixed deployment error with quantity of stickers code
+
